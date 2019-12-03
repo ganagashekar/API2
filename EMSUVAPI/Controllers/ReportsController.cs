@@ -29,7 +29,7 @@ namespace EMSVU.API.Controllers
 
         public ReportsController()
         {
-          
+
             _ReportServices = new  ReportServices();
             _commonServices = new CommonServices();
         }
@@ -40,6 +40,8 @@ namespace EMSVU.API.Controllers
         public async Task<HttpResponseMessage> FetchAverageReports(ReportRequestModel reportRequestModel)
         {
             var response = new SingleResponse<DataTable>();
+
+
             //DataSet dsData = new DataSet();
             //DataTable dtTable = new DataTable();
             //dtTable.Columns.Add(new DataColumn("Field1"));
@@ -67,9 +69,21 @@ namespace EMSVU.API.Controllers
 
 
             byte[] exportbyte = await _commonServices.ExportDataSet(dt, reportRequestModel);
-            return Request.CreateResponse(HttpStatusCode.OK,exportbyte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            //return Request.CreateResponse(HttpStatusCode.OK,exportbyte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(exportbyte.ToArray())
+            };
+            result.Content.Headers.ContentDisposition =
+                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "test"
+                };
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
 
+            return result;
         }
 
 
@@ -95,10 +109,47 @@ namespace EMSVU.API.Controllers
         {
             DataTable dt = await _ReportServices.GetLiveReport(reportRequestModel);
             byte[] exportbyte = await _commonServices.ExportDataSet(dt, reportRequestModel);
-            // return File(exportbyte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            return Request.CreateResponse(HttpStatusCode.OK, exportbyte, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(exportbyte.ToArray())
+            };
+            result.Content.Headers.ContentDisposition =
+                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "test"
+                };
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
+
+            return result;
+
         }
 
+
+
+        [Route("ExportexceedingReport")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ExportExceedenceReport(ReportRequestModel reportRequestModel)
+        {
+            DataTable dt = await _ReportServices.GetExceedenceReport(reportRequestModel);
+            byte[] exportbyte = await _commonServices.ExportDataSet(dt, reportRequestModel);
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(exportbyte.ToArray())
+            };
+            result.Content.Headers.ContentDisposition =
+                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "test"
+                };
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
+
+            return result;
+
+        }
         [Route("GetExceedenceReport")]
         [HttpPost]
         public async Task<HttpResponseMessage> GetExceedenceReport(ReportRequestModel reportRequestModel)

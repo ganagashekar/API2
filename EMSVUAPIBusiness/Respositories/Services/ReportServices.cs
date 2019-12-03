@@ -125,15 +125,15 @@ namespace EMSVUAPIBusiness.Respositories.Services
         public async Task<DataTable> GetAverageReport(ReportRequestModel reportRequestModel)
         {
             DataSet ds = new DataSet();
-            MySqlConnection connection = null;
+            SqlConnection connection = null;
             try
             {
                 lock (ds)
                 {
                   //  _dbContext.Database.AutoTransactionsEnabled = false;
-                    connection = new MySqlConnection(_dbContext.Database.Connection.ConnectionString);
+                    connection = new SqlConnection(_dbContext.Database.Connection.ConnectionString);
                     //Create Command
-                    using (MySqlCommand cmd = new MySqlCommand("GetAverageTimeReport", connection))
+                    using (SqlCommand cmd = new SqlCommand("GetAverageTimeReport", connection))
                     {
                         if (connection.State != ConnectionState.Open)
                             connection.Open();
@@ -150,7 +150,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                         cmd.Parameters.AddWithValue("@_Limit", reportRequestModel.StartIndex);
                         cmd.Parameters.AddWithValue("@_offset", reportRequestModel.EndIndex);
 
-                        MySqlDataAdapter sda = new MySqlDataAdapter(cmd);
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
                         sda.Fill(ds);
 
@@ -241,15 +241,15 @@ namespace EMSVUAPIBusiness.Respositories.Services
             #endregion
 
 
-            MySqlConnection connection = null;
+            SqlConnection connection = null;
             try
             {
                 lock (ds)
                 {
                     // _dbContext.Database.AutoTransactionsEnabled = false;
-                    connection = new MySqlConnection(_dbContext.Database.Connection.ConnectionString);
+                    connection = new SqlConnection(_dbContext.Database.Connection.ConnectionString);
                     //Create Command
-                    using (MySqlCommand cmd = new MySqlCommand("GetExcedenceReport", connection))
+                    using (SqlCommand cmd = new SqlCommand("GetExcedenceReport", connection))
                     {
                         if (connection.State != ConnectionState.Open)
                             connection.Open();
@@ -266,7 +266,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                         cmd.Parameters.AddWithValue("@_Limit", reportRequestModel.StartIndex);
                         cmd.Parameters.AddWithValue("@_offset", reportRequestModel.EndIndex);
 
-                        MySqlDataAdapter sda = new MySqlDataAdapter(cmd);
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
                         sda.Fill(ds);
                         //MySqlDataReader dataReader = cmd.ExecuteReader();
