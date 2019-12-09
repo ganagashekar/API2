@@ -10,5 +10,6 @@ namespace EMSVAPIModel.InuputModel
     public long StackId { set; get; }
     public long ParamId { set; get; }
     public long UserId { set; get; }
-}
+        public long VendorSiteId {set; get; }
+    }
 }

@@ -18,7 +18,7 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<ReferenceRecordsModel>> GetParameterforStack(ParamterRequestModel paramterRequest);
        // Task<List<control_Model>> Getcontrollers(string MacID, bool IncludeAll);
         Task<List<ReferenceRecordsModel>> Getconfigs(long BusId, bool IncludeAll);
-        Task<List<ControllerBus_Model>> CtrMacID(string macID, bool IncludeAll);
-     
+        Task<List<control_Model>> GetCtrMacID(string macID, bool IncludeAll);
+      
     }
 }

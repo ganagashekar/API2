@@ -16,7 +16,7 @@ namespace EMSVWPIDataContext.Entities
 
         [Key]
 		public System.Int64 audit_id{get;set;}
-		public System.String site_id{get;set;}
+		public System.Int64 site_id{get;set;}
 		public System.Int64 confg_id{get;set;}
 		public System.String stack_name{get;set;}
 		public System.String param_name{get;set;}

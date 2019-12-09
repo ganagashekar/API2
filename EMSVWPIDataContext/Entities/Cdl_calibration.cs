@@ -17,33 +17,35 @@ namespace EMSVWPIDataContext.Entities
         [Key]
 		public System.Int64 calib_status_id{get;set;}
 		public System.Int64 confg_id{get;set;}
-		public System.String calib_name{get;set;}
+        [ForeignKey("confg_id")]
+        public virtual dl_confg dl_sites { get; set; }
+        public System.String calib_name{get;set;}
 		public System.String param_name{get;set;}
 		public System.String calib_type{get;set;}
 		public System.Int32 calib_duriation{get;set;}
-		public System.DateTime calib_stat_DateTime{get;set;}
-		public System.DateTime calib_end_DateTime{get;set;}
-		public System.DateTime ca_set_zero_ts{get;set;}
+		public System.DateTime? calib_stat_DateTime{get;set;}
+		public System.DateTime? calib_end_DateTime{get;set;}
+		public System.DateTime? ca_set_zero_ts{get;set;}
 		public System.String ca_set_zero_stat_flag{get;set;}
-		public System.DateTime ca_set_zero_relay_open_ts{get;set;}
+		public System.DateTime? ca_set_zero_relay_open_ts{get;set;}
 		public System.String ca_set_zero_relay_open_stat_flag{get;set;}
-		public System.DateTime ca_set_zero_relay_close_ts{get;set;}
+		public System.DateTime? ca_set_zero_relay_close_ts{get;set;}
 		public System.String ca_set_zero_relay_close_stat_flag{get;set;}
-		public System.DateTime ca_real_gas_relay_open_ts{get;set;}
+		public System.DateTime? ca_real_gas_relay_open_ts{get;set;}
 		public System.String ca_real_gas_relay_open_stat_flag{get;set;}
-		public System.DateTime ca_real_gas_relay_close_ts{get;set;}
+		public System.DateTime? ca_real_gas_relay_close_ts{get;set;}
 		public System.String ca_real_gas_relay_close_stat_flag{get;set;}
-		public System.DateTime ca_read_prev_value_ts{get;set;}
+		public System.DateTime? ca_read_prev_value_ts{get;set;}
 		public System.String ca_read_prev_value_stat_flag{get;set;}
-		public System.Single calib_set_new_value{get;set;}
-		public System.DateTime ca_set_new_value_ts{get;set;}
+		public System.Single? calib_set_new_value{get;set;}
+		public System.DateTime? ca_set_new_value_ts{get;set;}
 		public System.String ca_set_new_value_stat_flag{get;set;}
-		public System.DateTime ca_make_span_ts{get;set;}
+		public System.DateTime? ca_make_span_ts{get;set;}
 		public System.String ca_make_span_stat_flag{get;set;}
-		public System.DateTime creat_ts{get;set;}
+		public System.DateTime? creat_ts{get;set;}
 		public System.String creat_usr{get;set;}
 		public System.String updt_usr{get;set;}
-		public System.DateTime updt_ts{get;set;}
+		public System.DateTime? updt_ts{get;set;}
 
 		public object GetRaw(string field)
 		{

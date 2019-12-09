@@ -118,17 +118,18 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
 
 
-        public async Task<List<ControllerBus_Model>> CtrMacID(string macId, bool IncludeAll)
+        public async Task<List<control_Model>> GetCtrMacID(string macId, bool IncludeAll)
         {
-            var dl_controller_buss = _dbContext.dl_controller_buss.Where(types => string.IsNullOrEmpty(macId) ? true : types.mac_id == macId).ToList();
-            var referencerecords = dl_controller_buss.Select(x => new ControllerBus_Model { macId = x.mac_id }).ToList();
+            var dl_controller = _dbContext.dl_controllers.Where(types => string.IsNullOrEmpty(macId) ? true : types.mac_id == macId).ToList();
+            var referencerecords = dl_controller.Select(x => new control_Model { macId = x.mac_id }).ToList();
             if (referencerecords.Any())
             {
-                //    //AddAllTOReferenceRecords(ref referencerecords);
-                //    /* return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());*/
+                // AddAllTOReferenceRecords(ref referencerecords);
+                /* return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());*/
             }
             return await Task.FromResult(referencerecords);
         }
+        
 
 
     }

@@ -12,6 +12,7 @@ namespace EMSVAPIModel
         public string UserPass { get; set; }
         public bool IsEnabled { get; set; }
         public long SiteId { get; set; }
+        public long vendorSiteId { get; set; }
         public DateTime Validityts { get; set; }
         public DateTime Creatts { get; set; }
         public DateTime Updtts { get; set; }

@@ -46,6 +46,7 @@ namespace EMSVUAPIBusiness.Mapper
           .ForMember(dest => dest.Updtts, src => src.MapFrom(s => s.updt_ts))
           .ForMember(dest => dest.Site, src => src.MapFrom(x => x.dl_vendor_sites.dl_Site))
           .ForMember(dest => dest.IsEnabled, src => src.MapFrom(s => s.is_enabled))
+          .ForMember(dest => dest.vendorSiteId, src => src.MapFrom(s => s.vendor_site_id))
            .ForMember(dest => dest.UserPass, src => src.Ignore()).ReverseMap();
 
 
@@ -61,7 +62,7 @@ namespace EMSVUAPIBusiness.Mapper
             CreateMap<dl_controller, control_Model>()
             .ForMember(dest => dest.cpcbUrl, src => src.MapFrom(s => s.cpcb_url))
             .ForMember(dest => dest.licenseKey, src => src.MapFrom(s => s.license_key))
-            .ForMember(dest => dest.MacId, src => src.MapFrom(s => s.mac_id))
+            .ForMember(dest => dest.macId, src => src.MapFrom(s => s.mac_id))
             .ForMember(dest => dest.osType, src => src.MapFrom(s => s.os_typ))
             .ForMember(dest => dest.SiteId, src => src.MapFrom(s => s.site_id))
             .ForMember(dest => dest.spcburl, src => src.MapFrom(s => s.spcb_url))
@@ -78,9 +79,9 @@ namespace EMSVUAPIBusiness.Mapper
                     .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts)).ReverseMap();
 
             CreateMap<dl_confg, Confg_Model>()
-                   .ForMember(dest => dest.confgID, src => src.MapFrom(s => s.confg_id))
-                   .ForMember(dest => dest.siteID, src => src.MapFrom(s => s.site_id))
-                   .ForMember(dest => dest.busID, src => src.MapFrom(s => s.bus_id))
+                   .ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
+                   .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.site_id))
+                   .ForMember(dest => dest.busId, src => src.MapFrom(s => s.bus_id))
 
                    .ForMember(dest => dest.stack_name, src => src.MapFrom(s => s.stack_name))
                    .ForMember(dest => dest.stack_typ, src => src.MapFrom(s => s.stack_typ))
@@ -104,8 +105,8 @@ namespace EMSVUAPIBusiness.Mapper
                 .ForMember(dest => dest.param_name, src => src.MapFrom(s => s.param_name)).ReverseMap();
 
             CreateMap<dl_site, site_Model>()
-                      .ForMember(dest => dest.SiteId, src => src.MapFrom(s => s.site_id))
-                     .ForMember(dest => dest.SiteName, src => src.MapFrom(s => s.site_name))
+                      .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.site_id))
+                     .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.site_name))
                      .ForMember(dest => dest.site_cpcb_cd, src => src.MapFrom(s => s.site_cpcb_cd))
                      .ForMember(dest => dest.site_in_ganga_basin, src => src.MapFrom(s => s.site_in_ganga_basin))
                      .ForMember(dest => dest.site_city, src => src.MapFrom(s => s.site_city))
@@ -162,12 +163,20 @@ namespace EMSVUAPIBusiness.Mapper
 
             CreateMap<dl_calibration, Calib_Model>().ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
           .ForMember(dest => dest.calibduriation, src => src.MapFrom(s => s.calib_duriation))
+          .ForMember(dest => dest.calibsetupid, src => src.MapFrom(s => s.calib_status_id))
           .ForMember(dest => dest.calibtype, src => src.MapFrom(s => s.calib_type))
+           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_sites.site_id))
+          // .ForMember(dest => dest.SiteName, src => src.MapFrom(s => s.dl_sites.site_name))
+
           .ForMember(dest => dest.paramName, src => src.MapFrom(s => s.param_name))
           .ForMember(dest => dest.create_ts, src => src.MapFrom(s => s.creat_ts))
             .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts)).ReverseMap();
 
-
+            CreateMap<dl_log, ApplicationLogs_Model>()
+                 .ForMember(dest => dest.logID, src => src.MapFrom(s => s.log_id))
+                  .ForMember(dest => dest.confgID, src => src.MapFrom(s => s.confg_id))
+                  .ForMember(dest => dest.errorCode, src => src.MapFrom(s => s.error_code))
+                  .ForMember(dest => dest.createts, src => src.MapFrom(s => s.creat_ts)).ReverseMap();
 
 
 

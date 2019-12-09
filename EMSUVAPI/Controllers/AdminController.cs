@@ -486,14 +486,14 @@ namespace EMSUVAPI.Controllers
 
         [HttpDelete]
         [Route("Deleteconfig")]
-        public async Task<HttpResponseMessage> Deleteconfig(int confgID)
+        public async Task<HttpResponseMessage> Deleteconfig(long confgId)
         {
 
 
             var response = new SingleResponse<bool>();
             try
             {
-                bool IsDeleted = await _adminServices.Deleteconfig(confgID);
+                bool IsDeleted = await _adminServices.Deleteconfig(confgId);
 
 
                 response.Model = IsDeleted;
@@ -554,14 +554,14 @@ namespace EMSUVAPI.Controllers
 
         [HttpDelete]
         [Route("DeleteSite")]
-        public async Task<HttpResponseMessage> DeleteSite(long SiteId)
+        public async Task<HttpResponseMessage> DeleteSite(long siteId)
         {
 
 
             var response = new SingleResponse<bool>();
             try
             {
-                bool IsDeleted = await _adminServices.DeleteSite(SiteId);
+                bool IsDeleted = await _adminServices.DeleteSite(siteId);
 
 
                 response.Model = IsDeleted;
@@ -718,7 +718,7 @@ namespace EMSUVAPI.Controllers
 
 
                 response.Model = SitesID;
-                if (SitesID.IsNull())
+                if (SitesID.IsNotNull())
                     response.Message = string.Format("site details saved .");
                 else
                     response.Message = string.Format("site saving failed or ErrorCode already exists");
@@ -1105,8 +1105,8 @@ namespace EMSUVAPI.Controllers
             return  Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
-        [Route("GetcalibrationAsync")]
-        public async Task<HttpResponseMessage> GetcalibrationAsync(CalibrationReqModel calibRequest)
+        [Route("GetcalibrationsetupAsync")]
+        public async Task<HttpResponseMessage> GetcalibrationsetupAsync(CalibrationReqModel calibRequest)
         {
 
 
@@ -1116,7 +1116,7 @@ namespace EMSUVAPI.Controllers
             try
             {
                 // Get the stock item by id
-                lstcalib = await _adminServices.GetcalibrationAsync(calibRequest);
+                lstcalib = await _adminServices.GetcalibrationsetupAsync(calibRequest);
 
                 response.PageSize = lstcalib.Count;
                 response.PageNumber = 1;
@@ -1140,8 +1140,8 @@ namespace EMSUVAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
-        [Route("SaveCalibration")]
-        public async Task<HttpResponseMessage> SaveCalibration(Calibration_Model calibreq)
+        [Route("Savecalibrationsetup")]
+        public async Task<HttpResponseMessage> Savecalibrationsetup(Calibration_Model calibreq)
         {
 
 
@@ -1154,7 +1154,7 @@ namespace EMSUVAPI.Controllers
                 // Get the stock item by id
                 //lstParameters = await _adminServices.GetParametersAsync(paramterRequest);
 
-                long ConfigID = await _adminServices.SaveCalibration(calibreq);
+                long ConfigID = await _adminServices.Savecalibrationsetup(calibreq);
 
 
                 response.Model = ConfigID;
@@ -1213,6 +1213,75 @@ namespace EMSUVAPI.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
+        [HttpDelete]
+        [Route("Deletecalibreport")]
+        public async Task<HttpResponseMessage> Deletecalibreport(long calibsetupid)
+        {
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(DeleteApplicationLog));
+
+            var response = new SingleResponse<bool>();
+            try
+            {
+                bool IsDeleted = await _adminServices.Deletecalibreport(calibsetupid);
+
+
+                response.Model = IsDeleted;
+                if (IsDeleted)
+                    response.Message = string.Format("log Row Deleted successfully.");
+                else
+                    response.Message = string.Format("log Deleting  failed or Please check references again");
+
+                // _logger?.LogInformation(response.Message);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(DeleteApplicationLog), ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+        [HttpPost]
+        [Route("Getsitescalib")]
+        public async Task<HttpResponseMessage> Getsitescalib(CalibReqModel calibRequest)
+        {
+
+
+            var response = new PagedResponse<sitesModel>();
+
+            List<sitesModel> lstconfigs = new List<sitesModel>();
+            //Sateesh Ganga
+            //Sateesh Gangareddy
+            try
+            {
+                // Get the stock item by id
+                //lstParameters = await _adminServices.GetParametersAsync(paramterRequest);
+
+                lstconfigs = await _adminServices.Getsitescalib(calibRequest);
+
+                response.PageSize = lstconfigs.Count;
+                response.PageNumber = 1;
+                response.Model = lstconfigs.ToList();
+
+                response.Message = string.Format("Page {0} of {1}, Total of Paramters: {2}.", 1, 1, response.PageSize);
+
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
 
     }
 }

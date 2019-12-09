@@ -271,17 +271,17 @@ namespace EMSVU.API.Controllers
         //    return response.ToHttpResponse();
 
         //}
-        [Route("CtrMacID")]
-        public async Task<HttpResponseMessage> CtrMacID(string macId, bool IncludeAll)
+        [Route("GetCtrMacID")]
+        public async Task<HttpResponseMessage> GetCtrMacID(string macId, bool IncludeAll)
         {
 
 
-            var response = new PagedResponse<ControllerBus_Model>();
+            var response = new PagedResponse<control_Model>();
 
             try
             {
                 // Get the stock item by id
-                var lstconfigs = await _referenceRecordsServcie.CtrMacID(macId, IncludeAll);
+                var lstconfigs = await _referenceRecordsServcie.GetCtrMacID(macId, IncludeAll);
 
                 if (lstconfigs.Any())
                 {

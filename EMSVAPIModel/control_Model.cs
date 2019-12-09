@@ -7,7 +7,7 @@ namespace EMSVAPIModel
     public class control_Model
     {
 
-        public string MacId { get; set; }
+        public string macId { get; set; }
         public long  SiteId { get; set; }
         public string osType { get; set; }
         public string cpcbUrl { get; set; }

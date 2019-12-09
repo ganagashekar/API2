@@ -6,6 +6,7 @@ namespace EMSVAPIModel.InuputModel
 {
     public class CalibReqModel
     {
+        public long calibsetupid { set; get; }
         public long confgId { set; get; }
         public string paramName { set; get; }
         public string calibtype { set; get; }

@@ -6,8 +6,8 @@ namespace EMSVAPIModel
 {
     public class site_Model
     {
-        public long SiteId { get; set; }
-        public string SiteName { get; set; }
+        public long siteId { get; set; }
+        public string siteName { get; set; }
         public string site_cpcb_cd { get; set; }
         public string site_in_ganga_basin { get; set; }
         public string site_city { get; set; }

@@ -6,9 +6,9 @@ namespace EMSVAPIModel
 {
     public class Confg_Model
     {
-        public long confgID { get; set; }
-        public long siteID { get; set; }
-        public long busID { get; set; }
+        public long confgId { get; set; }
+        public long siteId { get; set; }
+        public long busId { get; set; }
         //public string vendorID { get; set; }
         public string stack_name { get; set; }
        public string stack_status { get; set; }

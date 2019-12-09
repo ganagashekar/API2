@@ -22,7 +22,7 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<bool> DeleteErrorCode(string errorcode);
         Task<bool> DeleteController(string MacId);
         Task<bool> DeleteControllerbus(int BusId);
-        Task<bool> Deleteconfig(int confgID);
+        Task<bool> Deleteconfig(long confgId);
         Task<bool> Deleteaudit(int AuditId);
         Task<bool> DeleteSite(long SiteId);
         Task<bool> Deletecalibration(long calib_cmd_id);
@@ -37,8 +37,10 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<bool> DeleteApplicationLog(long logID);
         Task<string> SaveController(control_Model MacID);
         Task<List<ApplicationLogs_Model>> GetApplicationLogsAsync(ApplicationLogsReqModel logreq);
-        Task<List<Calibration_Model>> GetcalibrationAsync(CalibrationReqModel calibRequest);
-        Task<long> SaveCalibration(Calibration_Model calibreq);
+        Task<List<Calibration_Model>> GetcalibrationsetupAsync(CalibrationReqModel calibRequest);
+        Task<long> Savecalibrationsetup(Calibration_Model calibreq);
         Task<List<Calib_Model>> GetCalibReportAsync(CalibReqModel calibRequest);
+        Task<List<sitesModel>> Getsitescalib(CalibReqModel calibRequest);
+        Task<bool> Deletecalibreport(long calibsetupid);
     }
 }

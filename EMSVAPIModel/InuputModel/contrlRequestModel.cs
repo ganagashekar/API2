@@ -6,7 +6,7 @@ namespace EMSVAPIModel.InuputModel
 {
     public class contrlRequestModel
     {
-        public string MacId { set; get; }
+        public string macId { set; get; }
         public long SiteId { set; get; }
         public string osType { set; get; }
         public string cpcbUrl { set; get; }

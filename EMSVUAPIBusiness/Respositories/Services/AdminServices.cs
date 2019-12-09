@@ -340,16 +340,16 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var ConfigModel = await _dbContext.dl_confgs.FirstOrDefaultAsync(x => x.confg_id == confReq.confgID);
+                var ConfigModel = await _dbContext.dl_confgs.FirstOrDefaultAsync(x => x.confg_id == confReq.confgId);
                 if (ConfigModel.IsNull())
                 {
                     ConfigModel = new dl_confg();
                     _dbContext.dl_confgs.Add(ConfigModel);
                     ConfigModel.creat_ts = DateTime.Now;
                 }
-                ConfigModel.confg_id = confReq.confgID;
-                ConfigModel.site_id = confReq.siteID;
-                ConfigModel.bus_id = confReq.busID;
+                ConfigModel.confg_id = confReq.confgId;
+                ConfigModel.site_id = confReq.siteId;
+                ConfigModel.bus_id = confReq.busId;
                 //ConfigModel.vendor = confReq.vendorID;
                 ConfigModel.stack_name = confReq.stack_name;
                 ConfigModel.stack_typ = confReq.stack_typ;
@@ -378,14 +378,14 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var ConModel = await _dbContext.dl_controllers.FirstOrDefaultAsync(x => x.mac_id == MacID.MacId);
+                var ConModel = await _dbContext.dl_controllers.FirstOrDefaultAsync(x => x.mac_id == MacID.macId);
                 if (ConModel.IsNull())
                 {
                     ConModel = new dl_controller();
                     _dbContext.dl_controllers.Add(ConModel);
                     // ConModel.creat_ts = DateTime.Now;
                 }
-                ConModel.mac_id = MacID.MacId;
+                ConModel.mac_id = MacID.macId;
                 ConModel.site_id = MacID.SiteId;
                 ConModel.os_typ = MacID.osType;
                 ConModel.cpcb_url = MacID.cpcbUrl;
@@ -445,15 +445,15 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var siteModel = await _dbContext.dl_sites.FirstOrDefaultAsync(x => x.site_id == siteID.SiteId);
+                var siteModel = await _dbContext.dl_sites.FirstOrDefaultAsync(x => x.site_id == siteID.siteId);
                 if (siteModel.IsNull())
                 {
                     siteModel = new dl_site();
                     _dbContext.dl_sites.Add(siteModel);
-                    //  ConfigModel.creat_ts = DateTime.Now;
+                     siteModel.creat_ts = DateTime.Now;
                 }
-                siteModel.site_id = siteID.SiteId;
-                siteModel.site_name = siteID.SiteName;
+               
+                siteModel.site_name = siteID.siteName;
                 siteModel.site_cpcb_cd = siteID.site_cpcb_cd;
                 siteModel.site_in_ganga_basin = siteID.site_in_ganga_basin;
                 siteModel.site_city = siteID.site_city;
@@ -577,11 +577,11 @@ namespace EMSVUAPIBusiness.Respositories.Services
             }
         }
 
-        public async Task<bool> Deleteconfig(int confgID)
+        public async Task<bool> Deleteconfig(long confgId)
         {
             try
             {
-                var controllerModel = await _dbContext.dl_confgs.FirstOrDefaultAsync(x => x.confg_id == confgID);
+                var controllerModel = await _dbContext.dl_confgs.FirstOrDefaultAsync(x => x.confg_id == confgId);
                 if (controllerModel.IsNotNull())
                 {
                     _dbContext.dl_confgs.Remove(controllerModel);
@@ -617,11 +617,11 @@ namespace EMSVUAPIBusiness.Respositories.Services
             }
         }
 
-        public async Task<bool> DeleteSite(long SiteId)
+        public async Task<bool> DeleteSite(long siteId)
         {
             try
             {
-                var controllerModel = await _dbContext.dl_sites.FirstOrDefaultAsync(x => x.site_id == SiteId);
+                var controllerModel = await _dbContext.dl_sites.FirstOrDefaultAsync(x => x.site_id == siteId);
                 if (controllerModel.IsNotNull())
                 {
                     _dbContext.dl_sites.Remove(controllerModel);
@@ -689,14 +689,14 @@ namespace EMSVUAPIBusiness.Respositories.Services
             try
             {
                 var predicate = PredicateBuilder.New<dl_controller_bus>();
-                //if (!ctrBusRequest.macId.ToStringIsZero())
-                //{
-                //    predicate = predicate.And(p => p.mac_id == ctrBusRequest.macId);
-                //}
-                //else
-                //{
-                //    predicate = null;
-                //}
+                if (!ctrBusRequest.macId.ToStringIsZero())
+                {
+                    predicate = predicate.And(p => p.mac_id == ctrBusRequest.macId);
+                }
+                else
+                {
+                    predicate = null;
+                }
                 predicate = null;
 
                 var lstcontrollerbus = _dbContext.dl_controller_buss.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
@@ -744,7 +744,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 throw ex;
             }
         }
-        public async Task<List<Calibration_Model>> GetcalibrationAsync(CalibrationReqModel calibRequest)
+        public async Task<List<Calibration_Model>> GetcalibrationsetupAsync(CalibrationReqModel calibRequest)
         {
             try
             {
@@ -760,7 +760,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 throw ex;
             }
         }
-        public async Task<long> SaveCalibration(Calibration_Model calibreq)
+        public async Task<long> Savecalibrationsetup(Calibration_Model calibreq)
         {
             try
             {
@@ -819,6 +819,64 @@ namespace EMSVUAPIBusiness.Respositories.Services
             {
 
                 throw ex;
+            }
+        }
+        public async Task<List<sitesModel>> Getsitescalib(CalibReqModel calibRequest)
+        {
+            try
+            {
+                //var searchCriteria = new
+                //{
+                //    ConfigId = calibRequest.StackId,
+                //    SiteId = calibRequest.SiteId
+                //};
+
+                var predicate = PredicateBuilder.New<dl_site>();
+                //if (!calibRequest.siteId.ToLongIsZero())
+                //{
+                //    predicate = predicate.And(p => p.dl_site.site_id == (calibRequest.SiteId));
+                //}
+
+                //if (!calibRequest.StackId.ToLongIsZero())
+                //{
+                //    predicate = predicate.And(p => p.confg_id == calibRequest.StackId);
+                //}
+                //else
+                //{
+                //    predicate = null;
+                //}
+                predicate = null;
+
+                var lstParams = _dbContext.dl_sites.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
+
+                var Data = lstParams.Select(x => new sitesModel { siteName = x.site_name, siteId = x.site_id }).ToList();
+                // var data=  lstParams.ToDestinationList<dl_site, sitesModel>();
+
+                return await Task.FromResult(Data);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public async Task<bool> Deletecalibreport(long calibsetupid)
+        {
+            try
+            {
+                var calibModel = await _dbContext.dl_calibrations.FirstOrDefaultAsync(x => x.calib_status_id == calibsetupid);
+                if (calibModel.IsNotNull())
+                {
+                    _dbContext.dl_calibrations.Remove(calibModel);
+                }
+
+                _dbContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 
