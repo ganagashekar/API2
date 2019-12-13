@@ -77,16 +77,16 @@ namespace EMSVUAPIBusiness.Respositories.Services
             return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
         }
 
-        public async Task<List<Param_Model>> Getparamcalib(string paramname, bool IncludeAll)
+        public async Task<List<ReferenceRecordsModel>> Getparamcalib(long paramId, bool IncludeAll)
         {
-            var dl_param = _dbContext.dl_params.Where(types => string.IsNullOrEmpty(paramname) ? true : types.param_name == paramname).ToList();
-            var referencerecords = dl_param.Select(x => new Param_Model { paramname = x.param_name }).ToList();
+            var dl_confgs = _dbContext.dl_params.Where(types => paramId == 0 ? true : types.param_id == paramId).ToList();
+            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = Convert.ToInt64(x.param_id), Name=x.param_name }).ToList();
             if (referencerecords.Any())
             {
-                //    AddAllTOReferenceRecords(ref referencerecords);
-
+                AddAllTOReferenceRecords(ref referencerecords);
+                return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
             }
-            return await Task.FromResult(referencerecords);
+            return await Task.FromResult<List<ReferenceRecordsModel>>(null);
         }
         public async Task<List<ReferenceRecordsModel>> GetParameterforStack(ParamterRequestModel paramterRequest)
         {

@@ -238,16 +238,16 @@ namespace EMSVU.API.Controllers
         }
        // srikanth code
         [Route("Getparamcalib")]
-        public async Task<HttpResponseMessage> Getparamcalib(string paramname, bool IncludeAll)
+        public async Task<HttpResponseMessage> Getparamcalib(long paramId, bool IncludeAll)
         {
             // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
 
-            var response = new PagedResponse<Param_Model>();
+            var response = new PagedResponse<ReferenceRecordsModel>();
 
             try
             {
                 // Get the stock item by id
-                var lstcontbus = await _referenceRecordsServcie.Getparamcalib(paramname, IncludeAll);
+                var lstcontbus = await _referenceRecordsServcie.Getparamcalib(paramId, IncludeAll);
 
                 if (lstcontbus.Any())
                 {
