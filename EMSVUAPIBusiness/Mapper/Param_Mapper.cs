@@ -24,6 +24,7 @@ namespace EMSVUAPIBusiness.Mapper
             .ForMember(dest => dest.paramposition, src => src.MapFrom(s => s.param_position))
             .ForMember(dest => dest.paramunit, src => src.MapFrom(s => s.param_unit))
             .ForMember(dest => dest.StackName, src => src.MapFrom(s => s.dl_confgs.stack_name))
+             .ForMember(dest => dest.paramValue, src => src.Ignore())
              .ForMember(dest => dest.paramposition, src => src.MapFrom(s => s.param_position))
               .ForMember(dest => dest.length, src => src.MapFrom(s => s.length))
                  .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts)).ReverseMap();
@@ -47,6 +48,8 @@ namespace EMSVUAPIBusiness.Mapper
           .ForMember(dest => dest.Site, src => src.MapFrom(x => x.dl_vendor_sites.dl_Site))
           .ForMember(dest => dest.IsEnabled, src => src.MapFrom(s => s.is_enabled))
           .ForMember(dest => dest.vendorSiteId, src => src.MapFrom(s => s.vendor_site_id))
+           .ForMember(dest => dest.RoleId, src => src.MapFrom(s => s.userRoles.IsNotNull() ? s.userRoles.role_id : 0))
+           .ForMember(dest => dest.RoleName, src => src.MapFrom(s => s.userRoles.roles.IsNotNull() ? s.userRoles.roles.name : ""))
            .ForMember(dest => dest.UserPass, src => src.Ignore()).ReverseMap();
 
 
@@ -161,22 +164,44 @@ namespace EMSVUAPIBusiness.Mapper
 
 
 
-            CreateMap<dl_calibration, Calib_Model>().ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
-          .ForMember(dest => dest.calibduriation, src => src.MapFrom(s => s.calib_duriation))
+            CreateMap<dl_calibrations, Calib_Model>().ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
+
           .ForMember(dest => dest.calibsetupid, src => src.MapFrom(s => s.calib_status_id))
+           .ForMember(dest => dest.clib_name, src => src.MapFrom(s => s.calib_name))
+
+          .ForMember(dest => dest.calib_start_date, src => src.MapFrom(s => s.calib_stat_DateTime))
+
+          .ForMember(dest => dest.calib_end_date, src => src.MapFrom(s => s.calib_end_DateTime))
+
+          .ForMember(dest => dest.calib_zero_gas_name, src => src.MapFrom(s => s.calib_zero_gas_name))
+
+          .ForMember(dest => dest.calib_zero_gas_unit, src => src.MapFrom(s => s.calib_zero_gas_unit))
+
+          .ForMember(dest => dest.calib_zero_gas_type, src => src.MapFrom(s => s.calib_zero_gas_type))
+          .ForMember(dest => dest.ca_set_new_zero_value, src => src.MapFrom(s => s.ca_set_new_zero_value))
+          .ForMember(dest => dest.calib_zero_duriation, src => src.MapFrom(s => s.calib_zero_duriation))
+          .ForMember(dest => dest.calib_zero_delay, src => src.MapFrom(s => s.calib_zero_delay))
+
           .ForMember(dest => dest.calibtype, src => src.MapFrom(s => s.calib_type))
-           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_sites.site_id))
-          // .ForMember(dest => dest.SiteName, src => src.MapFrom(s => s.dl_sites.site_name))
+           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_confg.dl_site.site_id))
+           .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.dl_confg.dl_site.site_name))
 
           .ForMember(dest => dest.paramName, src => src.MapFrom(s => s.param_name))
           .ForMember(dest => dest.create_ts, src => src.MapFrom(s => s.creat_ts))
-            .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts)).ReverseMap();
+            .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts))
+             .ForMember(dest => dest.calib_span_gas_name, src => src.MapFrom(s => s.calib_span_gas_name))
+             .ForMember(dest => dest.calib_span_gas_unit, src => src.MapFrom(s => s.calib_span_gas_unit))
+                  .ForMember(dest => dest.calib_span_gas_type, src => src.MapFrom(s => s.calib_span_gas_type))
+                   .ForMember(dest => dest.ca_set_new_span_value, src => src.MapFrom(s => s.ca_set_new_span_value))
+                   .ForMember(dest => dest.calib_span_delay, src => src.MapFrom(s => s.calib_span_delay))
+                   .ForMember(dest => dest.calib_span_duriation, src => src.MapFrom(s => s.calib_span_duriation)).ReverseMap();
 
             CreateMap<dl_log, ApplicationLogs_Model>()
                  .ForMember(dest => dest.logID, src => src.MapFrom(s => s.log_id))
                   .ForMember(dest => dest.confgID, src => src.MapFrom(s => s.confg_id))
                   .ForMember(dest => dest.errorCode, src => src.MapFrom(s => s.error_code))
                   .ForMember(dest => dest.createts, src => src.MapFrom(s => s.creat_ts)).ReverseMap();
+
 
 
 

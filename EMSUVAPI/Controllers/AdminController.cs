@@ -14,53 +14,6 @@ using System.Web.Http;
 
 namespace EMSUVAPI.Controllers
 {
-    //[System.Web.Http.RoutePrefix("api/Admin")]
-    //public class AdminController : ApiController
-    //{
-    //    public IAdminServices _adminServices;
-    //    public AdminController()
-    //    {
-    //        _adminServices = new AdminServices();
-    //    }
-
-    //    [System.Web.Http.Route("GetParam")]
-    //    public async Task<HttpResponseMessage> GetParam()
-    //    {
-
-    //        ParamterRequestModel paramterRequest = new ParamterRequestModel();
-
-    //        var response = new PagedResponse<Param_Model>();
-
-    //        List<Param_Model> lstParameters = new List<Param_Model>();
-    //        try
-    //        {
-    //            // Get the stock item by id
-    //            lstParameters = await _adminServices.GetParametersAsync(paramterRequest);
-
-    //            response.PageSize = lstParameters.Count;
-    //            response.PageNumber = 1;
-    //            response.Model = lstParameters.ToList();
-
-    //            response.Message = string.Format("Page {0} of {1}, Total of Paramters: {2}.", 1, 1, response.PageSize);
-
-
-
-
-
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //          //  throw ex;
-    //            response.DidError = true;
-    //            response.ErrorMessage = ex.InnerException.StackTrace;// "There was an internal error, please contact to technical support.";
-
-    //            //  // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetParametersAsync), ex);
-    //        }
-
-    //      return  Request.CreateResponse(HttpStatusCode.OK, response);
-    //       // return  Request.CreateResponse(HttpStatusCode.OK, response);
-    //    }
-    //}
 
 
 
@@ -77,7 +30,7 @@ namespace EMSUVAPI.Controllers
         {
 
             _adminServices = new AdminServices();
-            _accountServices =new  AccountServices();
+            _accountServices = new AccountServices();
         }
 
 
@@ -116,7 +69,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpGet, Route("Login")]
@@ -136,7 +89,7 @@ namespace EMSUVAPI.Controllers
                     response.Message = string.Format("LoggedIn Successfully");
 
 
-                    return  Request.CreateResponse(HttpStatusCode.OK, response);
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
                 else
                     response.Message = string.Format("Please Enter Valid UserName or password");
@@ -150,7 +103,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -193,7 +146,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("GetuserinfoAsync")]
@@ -228,7 +181,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -269,7 +222,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpDelete]
         [Route("DeleteUserinfo")]
@@ -302,7 +255,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -343,7 +296,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpDelete]
@@ -377,7 +330,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpDelete]
         [Route("DeleteErrorCode")]
@@ -410,7 +363,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -445,7 +398,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -481,7 +434,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpDelete]
@@ -515,7 +468,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpDelete]
@@ -549,7 +502,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpDelete]
@@ -583,7 +536,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpPost]
@@ -618,7 +571,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpPost]
@@ -658,7 +611,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("saveControllerBus")]
@@ -697,7 +650,7 @@ namespace EMSUVAPI.Controllers
 
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("saveSite")]
@@ -736,7 +689,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(saveSite), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("GetApplicationLogsAsync")]
@@ -771,7 +724,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetApplicationLogsAsync), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("saveApplicationLogs")]
@@ -810,7 +763,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(saveApplicationLogs), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("GetcontrollerAsync")]
@@ -845,7 +798,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetParametersAsync), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpPost]
@@ -881,7 +834,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetcontrollerBusAsync), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpPost]
@@ -917,7 +870,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(ConfigAsync), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("saveConfig")]
@@ -956,7 +909,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(saveConfig), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("SaveController")]
@@ -995,7 +948,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(SaveController), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpDelete]
         [Route("DeleteApplicationLog")]
@@ -1028,7 +981,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(DeleteApplicationLog), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
@@ -1066,7 +1019,7 @@ namespace EMSUVAPI.Controllers
             }
 
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         [HttpPost]
@@ -1102,7 +1055,7 @@ namespace EMSUVAPI.Controllers
                 // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetsiteAsync), ex);
             }
 
-            return  Request.CreateResponse(HttpStatusCode.OK, response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
         [Route("GetcalibrationsetupAsync")]
@@ -1247,28 +1200,31 @@ namespace EMSUVAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [HttpPost]
-        [Route("Getsitescalib")]
-        public async Task<HttpResponseMessage> Getsitescalib(CalibReqModel calibRequest)
+        [Route("Savecalibreport")]
+        public async Task<HttpResponseMessage> Savecalibreport(Calib_Model calibreq)
         {
 
 
-            var response = new PagedResponse<sitesModel>();
 
-            List<sitesModel> lstconfigs = new List<sitesModel>();
-            //Sateesh Ganga
-            //Sateesh Gangareddy
+            var response = new SingleResponse<long>();
+
+
             try
             {
                 // Get the stock item by id
                 //lstParameters = await _adminServices.GetParametersAsync(paramterRequest);
 
-                lstconfigs = await _adminServices.Getsitescalib(calibRequest);
+                long ConfigID = await _adminServices.Savecalibreport(calibreq);
 
-                response.PageSize = lstconfigs.Count;
-                response.PageNumber = 1;
-                response.Model = lstconfigs.ToList();
 
-                response.Message = string.Format("Page {0} of {1}, Total of Paramters: {2}.", 1, 1, response.PageSize);
+                response.Model = ConfigID;
+                if (ConfigID > 0)
+                    response.Message = string.Format("Calibration details saved .");
+                else
+                    response.Message = string.Format("Calibration saving failed or Calibration already exists");
+
+
+
 
             }
             catch (Exception ex)

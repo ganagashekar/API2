@@ -13,6 +13,9 @@ namespace EMSVWPIDataContext.Entities
     {
         [Key]
         public long usr_id { get; set; }
+
+        [ForeignKey("usr_id")]
+        public virtual dl_usr_roles userRoles { set; get; }
         public string usr_name { get; set; }
         public string pass { get; set; }
         public bool is_enabled { get; set; }

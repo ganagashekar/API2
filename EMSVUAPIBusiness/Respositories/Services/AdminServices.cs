@@ -450,9 +450,9 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 {
                     siteModel = new dl_site();
                     _dbContext.dl_sites.Add(siteModel);
-                     siteModel.creat_ts = DateTime.Now;
+                    siteModel.creat_ts = DateTime.Now;
                 }
-               
+
                 siteModel.site_name = siteID.siteName;
                 siteModel.site_cpcb_cd = siteID.site_cpcb_cd;
                 siteModel.site_in_ganga_basin = siteID.site_in_ganga_basin;
@@ -809,11 +809,11 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var predicate = PredicateBuilder.New<dl_calibration>();
+                var predicate = PredicateBuilder.New<dl_calibrations>();
                 predicate = null;
                 var lstcalib = _dbContext.dl_calibrations.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
 
-                return await Task.FromResult(lstcalib.ToDestinationList<dl_calibration, Calib_Model>());
+                return await Task.FromResult(lstcalib.ToDestinationList<dl_calibrations, Calib_Model>());
             }
             catch (Exception ex)
             {
@@ -821,45 +821,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 throw ex;
             }
         }
-        public async Task<List<sitesModel>> Getsitescalib(CalibReqModel calibRequest)
-        {
-            try
-            {
-                //var searchCriteria = new
-                //{
-                //    ConfigId = calibRequest.StackId,
-                //    SiteId = calibRequest.SiteId
-                //};
 
-                var predicate = PredicateBuilder.New<dl_site>();
-                //if (!calibRequest.siteId.ToLongIsZero())
-                //{
-                //    predicate = predicate.And(p => p.dl_site.site_id == (calibRequest.SiteId));
-                //}
-
-                //if (!calibRequest.StackId.ToLongIsZero())
-                //{
-                //    predicate = predicate.And(p => p.confg_id == calibRequest.StackId);
-                //}
-                //else
-                //{
-                //    predicate = null;
-                //}
-                predicate = null;
-
-                var lstParams = _dbContext.dl_sites.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
-
-                var Data = lstParams.Select(x => new sitesModel { siteName = x.site_name, siteId = x.site_id }).ToList();
-                // var data=  lstParams.ToDestinationList<dl_site, sitesModel>();
-
-                return await Task.FromResult(Data);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
         public async Task<bool> Deletecalibreport(long calibsetupid)
         {
             try
@@ -877,6 +839,51 @@ namespace EMSVUAPIBusiness.Respositories.Services
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+        public async Task<long> Savecalibreport(Calib_Model calibreq)
+        {
+            try
+            {
+
+                var CalibModel = await _dbContext.dl_calibrations.Include(x => x.dl_confg).Include(x => x.dl_confg.dl_site).FirstOrDefaultAsync(x => x.confg_id == calibreq.confgId);
+                if (CalibModel.IsNull())
+                {
+                    CalibModel = new dl_calibrations();
+                    _dbContext.dl_calibrations.Add(CalibModel);
+                    CalibModel.creat_ts = DateTime.Now;
+                }
+                CalibModel.confg_id = calibreq.confgId;
+                CalibModel.dl_confg.dl_site.site_name = calibreq.siteName;
+                CalibModel.param_name = calibreq.paramName;
+                CalibModel.calib_name = calibreq.clib_name;
+                CalibModel.calib_type = calibreq.calibtype;
+                //ConfigModel.vendor = confReq.vendorID;
+                CalibModel.calib_stat_DateTime = calibreq.calib_start_date;
+                CalibModel.calib_end_DateTime = calibreq.calib_end_date;
+                CalibModel.calib_zero_gas_name = calibreq.calib_zero_gas_name;
+                CalibModel.calib_zero_gas_unit = calibreq.calib_zero_gas_unit;
+                CalibModel.calib_zero_gas_type = calibreq.calib_zero_gas_type;
+                CalibModel.ca_set_new_zero_value = calibreq.ca_set_new_zero_value;
+                CalibModel.calib_zero_duriation = calibreq.calib_zero_duriation;
+                CalibModel.calib_zero_delay = calibreq.calib_zero_delay;
+                CalibModel.calib_span_gas_name = calibreq.calib_span_gas_name;
+                CalibModel.calib_span_gas_unit = calibreq.calib_span_gas_unit;
+                CalibModel.calib_span_gas_type = calibreq.calib_span_gas_type;
+                CalibModel.ca_set_new_span_value = calibreq.ca_set_new_span_value;
+                CalibModel.calib_span_duriation = calibreq.calib_span_duriation;
+                CalibModel.calib_span_delay = calibreq.calib_span_delay;
+                // CalibModel.ca_set_make_span_resp = calibreq.setMakeSpanResp;
+
+
+                CalibModel.updt_ts = DateTime.Now;
+                _dbContext.SaveChanges();
+
+                return CalibModel.confg_id;
+            }
+            catch (Exception ex)
+            {
+                return 0;
             }
         }
 

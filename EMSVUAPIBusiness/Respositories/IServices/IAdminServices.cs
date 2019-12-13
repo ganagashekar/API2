@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EMSVUAPIBusiness.Respositories.IServices
 {
-   public interface IAdminServices
+    public interface IAdminServices
     {
         Task<List<Param_Model>> GetParametersAsync(ParamterRequestModel paramterRequest);
         Task<List<ConfigModel>> GetConfigAsync(ParamterRequestModel configRequest);
@@ -40,7 +40,8 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<Calibration_Model>> GetcalibrationsetupAsync(CalibrationReqModel calibRequest);
         Task<long> Savecalibrationsetup(Calibration_Model calibreq);
         Task<List<Calib_Model>> GetCalibReportAsync(CalibReqModel calibRequest);
-        Task<List<sitesModel>> Getsitescalib(CalibReqModel calibRequest);
+        Task<long> Savecalibreport(Calib_Model calibreq);
         Task<bool> Deletecalibreport(long calibsetupid);
+        
     }
 }

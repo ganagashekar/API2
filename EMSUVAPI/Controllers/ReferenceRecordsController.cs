@@ -236,41 +236,41 @@ namespace EMSVU.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
 
         }
-        ////srikanth code
-        //[Route("GetcontrollerBus")]
-        //public async Task<HttpResponseMessage> GetcontrollersBus(long SiteId, bool IncludeAll)
-        //{
-        //    // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
+       // srikanth code
+        [Route("Getparamcalib")]
+        public async Task<HttpResponseMessage> Getparamcalib(string paramname, bool IncludeAll)
+        {
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
 
-        //    var response = new PagedResponse<ReferenceRecordsModel>();
+            var response = new PagedResponse<Param_Model>();
 
-        //    try
-        //    {
-        //        // Get the stock item by id
-        //        var lstcontbus = await _referenceRecordsServcie.GetcontrollerBuss(SiteId, IncludeAll);
+            try
+            {
+                // Get the stock item by id
+                var lstcontbus = await _referenceRecordsServcie.Getparamcalib(paramname, IncludeAll);
 
-        //        if (lstcontbus.Any())
-        //        {
-        //            response.PageSize = lstcontbus.Count;
-        //            response.PageNumber = 1;
-        //            response.Model = lstcontbus.ToList();
+                if (lstcontbus.Any())
+                {
+                    response.PageSize = lstcontbus.Count;
+                    response.PageNumber = 1;
+                    response.Model = lstcontbus.ToList();
 
-        //            response.Message = string.Format("Page {0} of {1}, Total of configs: {2}.", 1, 1, response.PageSize);
+                    response.Message = string.Format("Page {0} of {1}, Total of configs: {2}.", 1, 1, response.PageSize);
 
-        //            // _logger?.LogInformation("The stock items have been retrieved successfully.");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.DidError = true;
-        //        response.ErrorMessage = "There was an internal error, please contact to technical support.";
+                    // _logger?.LogInformation("The stock items have been retrieved successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
 
-        //        // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetReferenceRecords), ex);
-        //    }
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetReferenceRecords), ex);
+            }
 
-        //    return response.ToHttpResponse();
+            return Request.CreateResponse(HttpStatusCode.OK, response);
 
-        //}
+        }
         [Route("GetCtrMacID")]
         public async Task<HttpResponseMessage> GetCtrMacID(string macId, bool IncludeAll)
         {

@@ -77,6 +77,17 @@ namespace EMSVUAPIBusiness.Respositories.Services
             return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
         }
 
+        public async Task<List<Param_Model>> Getparamcalib(string paramname, bool IncludeAll)
+        {
+            var dl_param = _dbContext.dl_params.Where(types => string.IsNullOrEmpty(paramname) ? true : types.param_name == paramname).ToList();
+            var referencerecords = dl_param.Select(x => new Param_Model { paramname = x.param_name }).ToList();
+            if (referencerecords.Any())
+            {
+                //    AddAllTOReferenceRecords(ref referencerecords);
+
+            }
+            return await Task.FromResult(referencerecords);
+        }
         public async Task<List<ReferenceRecordsModel>> GetParameterforStack(ParamterRequestModel paramterRequest)
         {
 
@@ -106,8 +117,8 @@ namespace EMSVUAPIBusiness.Respositories.Services
         //srikanth code
         public async Task<List<ReferenceRecordsModel>> Getconfigs(long BusId, bool IncludeAll)
         {
-            var dl_confgs = _dbContext.dl_confgs.Where(types => BusId == 0 ? true : types.confg_id == BusId).ToList();
-            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.bus_id, Name = x.stack_name }).ToList();
+            var dl_confgs = _dbContext.dl_controller_buss.Where(types => BusId == 0 ? true : types.bus_id == BusId).ToList();
+            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.bus_id }).ToList();
             if (referencerecords.Any())
             {
                 AddAllTOReferenceRecords(ref referencerecords);
@@ -120,7 +131,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
         public async Task<List<control_Model>> GetCtrMacID(string macId, bool IncludeAll)
         {
-            var dl_controller = _dbContext.dl_controllers.Where(types => string.IsNullOrEmpty(macId) ? true : types.mac_id == macId).ToList();
+            var dl_controller = _dbContext.dl_controllers.Include(x => x.dl_sites).Where(types => string.IsNullOrEmpty(macId) ? true : types.mac_id == macId).ToList();
             var referencerecords = dl_controller.Select(x => new control_Model { macId = x.mac_id }).ToList();
             if (referencerecords.Any())
             {
@@ -129,7 +140,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
             }
             return await Task.FromResult(referencerecords);
         }
-        
+
 
 
     }

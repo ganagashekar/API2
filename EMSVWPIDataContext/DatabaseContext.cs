@@ -73,6 +73,6 @@ namespace EMSVWPIDataContext
         public DbSet<Referencerecordtypes> Referencerecordtypes { set; get; }
 
         public DbSet<dl_calib_cmd_setup> dl_calib_cmd_setups { set; get; }
-        public DbSet<dl_calibration> dl_calibrations { set; get; }
+        public DbSet<dl_calibrations> dl_calibrations { set; get; }
     }
 }
