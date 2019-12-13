@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data;
 namespace EMSVUAPIBusiness.Respositories.IServices
 {
    public interface IDashboardServices
@@ -12,5 +12,7 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<DashboardQuickCounts> GetDashboardQuickCountsAsync(DashboardRequestModel paramterRequest);
 
         Task<List<DashboardQuickDataModel>> GetDashboardQucikDataAsync(DashboardRequestModel Request);
+
+        Task<DataTable> GetDashboardChartDayData(DashboardRequestModel paramterRequest);
     }
 }

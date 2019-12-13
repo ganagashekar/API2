@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="ConfigModel.cs" />
     <Compile Include="ControllerBus_Model.cs" />
     <Compile Include="control_Model.cs" />
+    <Compile Include="Dasboard\DashboardParamModel.cs" />
     <Compile Include="Dasboard\DashboardQuickCounts.cs" />
     <Compile Include="Dasboard\DashboardQuickTableModel.cs" />
     <Compile Include="error_Model.cs" />

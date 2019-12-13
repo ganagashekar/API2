@@ -11,5 +11,12 @@ namespace EMSVAPIModel.Dasboard
         public int ExceedenceCount { set; get; }
         public int AlertCount { set; get; }
 
+        public List<DashboardExceedence> exceedence { set; get; }
+        public List<DashboardExceedence> alarms { set; get; }
+
+         public List<DashboardParamModel> paramters{ set; get; }
+        public List<ConfigModel> stations { set; get; }
+
+
     }
 }

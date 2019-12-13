@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -82,6 +83,9 @@ namespace EMSVU.API.Models
         public string ErrorMessage { get; set; }
         [DataMember]
         public IEnumerable<TModel> Model { get; set; }
+
+        [DataMember]
+        public object DataTable { get; set; }
         [DataMember]
         public int PageSize { get; set; }
         [DataMember]

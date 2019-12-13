@@ -12,5 +12,7 @@ namespace EMSVAPIModel.InuputModel
         public long dataId { set; get; }
 
         public DateTime toDate { set; get; }
+
+        public bool IsFirst { set; get; }
     }
 }

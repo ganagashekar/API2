@@ -6,6 +6,20 @@ namespace EMSVAPIModel.InuputModel
 {
    public class ReportRequestModel
     {
+        public ReportRequestModel()
+        {
+            StackId = 0;
+            SiteId = 0;
+            ParamId = 0;
+            FromDate = DateTime.Now.Date.AddHours(0).AddMinutes(0).AddSeconds(0).AddDays(0);
+            ToDate = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59).AddDays(0);
+            TimePeriod = 0;
+            IsExport = false;
+            StartIndex = 0;
+            EndIndex = 0;
+
+
+        }
         public long StackId { set; get; }
         public long SiteId { set; get; }
 

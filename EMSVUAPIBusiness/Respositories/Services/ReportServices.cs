@@ -46,7 +46,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
             {
                 predicate = predicate.And(p => p.confg_id == report.StackId);
             }
-            if (!(predicate.Parameters.Count > 0))
+            if (oldPredicate== predicate)
             {
                 predicate = null;
             }
@@ -56,9 +56,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
             foreach (DataColumn col in Dt.Columns)
             {
-                var parametersModel = lstParams.FirstOrDefault(x => x.param_name == col.ColumnName);
+                var parametersModel = lstParams.FirstOrDefault(x => x.param_name.ToLower() == col.ColumnName.ToLower());
                 if (parametersModel != null)
-                    col.ColumnName = (report.IsExport ? (parametersModel.dl_confgs.IsNotNull() ? parametersModel.dl_confgs.stack_name : string.Empty) : string.Empty) + " " + parametersModel.param_name + " ( " + parametersModel.param_unit.Replace('/', '/') + " )";
+                    col.ColumnName = (true ? (parametersModel.dl_confgs.IsNotNull() ? parametersModel.dl_confgs.stack_name : string.Empty) : string.Empty) + "-" + parametersModel.param_name + "-" + "  ( " + parametersModel.param_unit.Replace('/', '/') + " )";
+                // col.ColumnName = (report.IsExport ? (parametersModel.dl_confgs.IsNotNull() ? parametersModel.dl_confgs.stack_name : string.Empty) : string.Empty) + " " + parametersModel.param_name + " ( " + parametersModel.param_unit.Replace('/', '/') + " )";
             }
             return Dt;
         }
@@ -79,11 +80,20 @@ namespace EMSVUAPIBusiness.Respositories.Services
                             connection.Open();
 
                         cmd.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter sinceFromDateParam = new SqlParameter("@_FromDate", SqlDbType.DateTime);
+                        sinceFromDateParam.Value = reportRequestModel.FromDate;
+
+                        SqlParameter sinceTODateParam = new SqlParameter("@_Todate", SqlDbType.DateTime);
+                        sinceTODateParam.Value = reportRequestModel.ToDate;
+
+
                         cmd.Parameters.AddWithValue("@_siteId", reportRequestModel.SiteId);
                         cmd.Parameters.AddWithValue("@_configId", reportRequestModel.StackId);
                         cmd.Parameters.AddWithValue("@_paramid", reportRequestModel.ParamId);
-                        cmd.Parameters.AddWithValue("@_FromDate", reportRequestModel.FromDate);
-                        cmd.Parameters.AddWithValue("@_Todate", reportRequestModel.ToDate);
+                        cmd.Parameters.Add(sinceFromDateParam);
+                        cmd.Parameters.Add(sinceTODateParam);
+
                         cmd.Parameters.AddWithValue("@_time", reportRequestModel.TimePeriod);
 
                         cmd.Parameters.AddWithValue("@_isExport", reportRequestModel.IsExport);
@@ -139,12 +149,24 @@ namespace EMSVUAPIBusiness.Respositories.Services
                             connection.Open();
 
                         cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        //SqlParameter sinceFromDateParam = new SqlParameter("@_Fromdate", SqlDbType.DateTime);
+                        //sinceFromDateParam.Value = reportRequestModel.FromDate.ToString("yyyy-MM-dd HH:mm:ss");
+
+                        //SqlParameter sinceTODateParam = new SqlParameter("@_Todate", SqlDbType.DateTime);
+                        //sinceTODateParam.Value = reportRequestModel.ToDate.ToString("yyyy-MM-dd HH:mm:ss");
+                        cmd.Parameters.AddWithValue("@_Fromdate", reportRequestModel.FromDate);
+                        cmd.Parameters.AddWithValue("@_Todate", reportRequestModel.ToDate);
+
                         cmd.Parameters.AddWithValue("@_siteId", reportRequestModel.SiteId);
                         cmd.Parameters.AddWithValue("@_configId", reportRequestModel.StackId);
                         cmd.Parameters.AddWithValue("@_paramid", reportRequestModel.ParamId);
-                        cmd.Parameters.AddWithValue("@_FromDate", reportRequestModel.FromDate);
-                        cmd.Parameters.AddWithValue("@_Todate", reportRequestModel.ToDate);
+
                         cmd.Parameters.AddWithValue("@_time", reportRequestModel.TimePeriod);
+
+                        //cmd.Parameters.Add(sinceFromDateParam);
+                        //cmd.Parameters.Add(sinceTODateParam);
 
                         cmd.Parameters.AddWithValue("@_isExport", reportRequestModel.IsExport);
                         cmd.Parameters.AddWithValue("@_Limit", reportRequestModel.StartIndex);
@@ -277,7 +299,8 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
                     }
                 }
-                return await Task.FromResult(ds.Tables[0]);
+                DataTable dt = AddStackNameUnits(ds.Tables[0], reportRequestModel);
+                return await Task.FromResult(dt);
             }
             catch (Exception ex)
             {

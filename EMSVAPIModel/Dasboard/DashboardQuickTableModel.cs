@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace EMSVAPIModel.Dasboard
@@ -20,5 +21,14 @@ namespace EMSVAPIModel.Dasboard
 
         public bool IsGroupby { set; get; }
         public bool Status { set; get; }
+
+        public DataTable TodayData { set; get; }
+
+       public string ChartSeriesName { set; get; }
+
+       public string color_code { set; get; }
+
+        public long paramId { set; get; }
+        public string Limit { set; get; }
     }
 }
