@@ -1,5 +1,6 @@
 ﻿using ChoETL;
 using EMSUVAPI.Models;
+using EMSVU.API.Models;
 using System;
 using System.Configuration;
 using System.Data;
@@ -19,35 +20,45 @@ namespace EMSUVAPI.Controllers
         [HttpPost, Route("api/upload")]
         public async Task<IHttpActionResult> Upload(string CompanyId)
         {
-            if (!Request.Content.IsMimeMultipartContent())
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 
-            var provider = new MultipartMemoryStreamProvider();
-            await Request.Content.ReadAsMultipartAsync(provider);
-            foreach (var file in provider.Contents)
+            try
             {
-                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
-                var buffer = await file.ReadAsByteArrayAsync();
 
-                var createfolder = System.Web.Hosting.HostingEnvironment.MapPath(Path.Combine("~/Attachments/", CompanyId));
-                if (!Directory.Exists(createfolder))
+                if (!Request.Content.IsMimeMultipartContent())
+                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+                var provider = new MultipartMemoryStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(provider);
+                foreach (var file in provider.Contents)
                 {
-                    System.IO.Directory.CreateDirectory(createfolder);
+                    var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+
+                    string FileExtn = System.IO.Path.GetExtension(filename);
+                    if (FileExtn != ".csv")
+                    {
+                        return Ok("Wrong File.please Import Correct file");
+                    }
+                    var buffer = await file.ReadAsByteArrayAsync();
+
+                    var createfolder = System.Web.Hosting.HostingEnvironment.MapPath(Path.Combine("~/Attachments/", CompanyId));
+                    if (!Directory.Exists(createfolder))
+                    {
+                        System.IO.Directory.CreateDirectory(createfolder);
+                    }
+                    string SavedFileName = createfolder + "//" + filename;
+                    File.WriteAllBytes(SavedFileName, buffer);
+
+                   await ImportData(SavedFileName);
+
                 }
-                string SavedFileName = createfolder + "//" + filename;
-                File.WriteAllBytes(SavedFileName, buffer);
 
-                ImportData(SavedFileName);
-                //DataTable data = new DataTable();
-                //BinaryFormatter bformatter = new BinaryFormatter();
-                //MemoryStream stream = new MemoryStream();
-                //stream = new MemoryStream(buffer);
-                //data = (DataTable)bformatter.Deserialize(stream);
-                //stream.Close();
-                //Do whatever you want with filename and its binary data.
+                return Ok("Import Successfull");
             }
+            catch (Exception ex)
+            {
 
-            return Ok();
+                return Ok("Failed to Import");
+            }
         }
 
         static void InsertDataIntoSQLServerUsingSQLBulkCopy(DataTable csvFileData)
@@ -65,45 +76,9 @@ namespace EMSUVAPI.Controllers
             }
         }
 
-        //    public void ImportToServer()
-        //    {
-        //        var dataReader = new CsvDataReader(filePath,
-        //new List<TypeCode>(5)
-        //{
-        //        TypeCode.String,
-        //        TypeCode.Decimal,
-        //        TypeCode.String,
-        //        TypeCode.Boolean,
-        //        TypeCode.DateTime
-        //});
-
-        //        bulkCopyUtility.BulkCopy("TableName", dataReader);
-        //    }
 
 
-        //public void ImportTableFromFile(string FilePath)
-        //{
-        // //   using (var fileStream = new FileStream(filenameSql, FileMode.Open, FileAccess.Read))
-        //    using (var streamReader = new CsvDataReader(FilePath))
-        //    {
-        //        string connectionstring = ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString;
-        //        //var externalTransaction = _transaction != null ? _transaction.Transaction : null;
-        //        //var executeQuery = _sqlServer.ExecuteQuery("select top 1 * from " + table, _transaction);
-        //        using (var bc = new SqlBulkCopy(connectionstring, SqlBulkCopyOptions.TableLock))
-        //        {
-
-        //            bc.BatchSize = 10000;
-        //            bc.BulkCopyTimeout = 6000; //10 Minutes
-        //            bc.DestinationTableName = table;
-
-        //            IDataReader dt = new CsvDataReader(streamReader);
-        //            bc.WriteToServer(dt);
-        //            bc.Close();
-        //        }
-        //    }
-        //}
-
-        public void ImportData(string FilePath)
+        public async Task<bool> ImportData(string FilePath)
         {
             try
             {
@@ -136,11 +111,12 @@ namespace EMSUVAPI.Controllers
                         bcp.Close();
                      }
                 }
+                return true;
             }
             catch (Exception ex)
             {
 
-                throw ex;
+                return false;
             }
         }
     }
