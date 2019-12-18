@@ -35,6 +35,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
             inModel.StackId = paramterRequest.StackId;
             inModel.ParamId = paramterRequest.ParamId;
 
+            inModel.FromDate = paramterRequest.fromDate;
+            inModel.ToDate = paramterRequest.toDate;
+
+
 
             return await ReportServices.GetAverageReport(inModel);
         }
@@ -234,6 +238,22 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
                 throw ex;
             }
+        }
+
+        public async Task<DataTable> GetCalibrationreport(DashboardRequestModel paramterRequest)
+        {
+            var ReportServices = new ReportServices();
+            ReportRequestModel inModel = new ReportRequestModel();
+            inModel.SiteId = paramterRequest.SiteId;
+            inModel.StackId = paramterRequest.StackId;
+            inModel.ParamId = paramterRequest.ParamId;
+
+            inModel.FromDate = paramterRequest.fromDate;
+            inModel.ToDate = paramterRequest.toDate;
+
+
+
+            return await ReportServices.GetAverageReport(inModel);
         }
     }
 }

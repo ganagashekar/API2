@@ -20,5 +20,7 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<ReferenceRecordsModel>> Getconfigs(long BusId, bool IncludeAll);
         Task<List<control_Model>> GetCtrMacID(string macID, bool IncludeAll);
         Task<List<ReferenceRecordsModel>> Getparamcalib(long paramId, bool IncludeAll);
+        Task<List<ReferenceRecordsModel>> Getconfigbybusid(long BusId, bool IncludeAll);
+        Task<List<User_Model>> GetUsrRole(long RoleId, bool IncludeAll);
     }
 }

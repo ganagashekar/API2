@@ -46,6 +46,7 @@
     <Compile Include="Audit_Model.cs" />
     <Compile Include="Calibration_Model.cs" />
     <Compile Include="Calib_Model.cs" />
+    <Compile Include="Cameras_Model.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Confg_Model.cs" />
     <Compile Include="ConfigModel.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="InuputModel\AuditRequst_Model.cs" />
     <Compile Include="InuputModel\CalibrationReqModel.cs" />
     <Compile Include="InuputModel\CalibReqModel.cs" />
+    <Compile Include="InuputModel\CameraRequestModel.cs" />
     <Compile Include="InuputModel\ConfigReqModel.cs" />
     <Compile Include="InuputModel\contrlRequestModel.cs" />
     <Compile Include="InuputModel\ControllerBusReqModel.cs" />

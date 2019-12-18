@@ -1201,7 +1201,7 @@ namespace EMSUVAPI.Controllers
         }
         [HttpPost]
         [Route("Savecalibreport")]
-        public async Task<HttpResponseMessage> Savecalibreport(Calib_Model calibreq)
+        public async Task<HttpResponseMessage> Savecalibreport(CalibReqModel calibreq)
         {
 
 
@@ -1233,6 +1233,115 @@ namespace EMSUVAPI.Controllers
                 response.ErrorMessage = "There was an internal error, please contact to technical support.";
 
 
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpDelete]
+        [Route("Deletecamera")]
+        public async Task<HttpResponseMessage> Deletecamera(long cam_id)
+        {
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(DeleteApplicationLog));
+
+            var response = new SingleResponse<bool>();
+            try
+            {
+                bool IsDeleted = await _adminServices.Deletecamera(cam_id);
+
+
+                response.Model = IsDeleted;
+                if (IsDeleted)
+                    response.Message = string.Format("Camera Row Deleted successfully.");
+                else
+                    response.Message = string.Format("Camera Deleting  failed or Please check references again");
+
+                // _logger?.LogInformation(response.Message);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(DeleteApplicationLog), ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpPost]
+        [Route("GetcameraAsync")]
+        public async Task<HttpResponseMessage> GetcameraAsync(CameraRequestModel cameraRequest)
+        {
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(GetcontrollerAsync));
+
+            var response = new PagedResponse<Cameras_Model>();
+
+            List<Cameras_Model> lstParameters = new List<Cameras_Model>();
+            try
+            {
+                // Get the stock item by id
+                lstParameters = await _adminServices.GetcameraAsync(cameraRequest);
+
+                response.PageNumber = 1;
+                response.Model = lstParameters.ToList();
+
+                response.Message = string.Format("Page {0} of {1}, Total of Paramters: {2}.", 1, 1, response.PageSize);
+
+                // _logger?.LogInformation("The stock items have been retrieved successfully.");
+
+
+
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetParametersAsync), ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpPost]
+        [Route("savecamera")]
+        public async Task<HttpResponseMessage> savecamera(Cameras_Model camreq)
+        {
+
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(saveConfig));
+
+            var response = new SingleResponse<long>();
+
+
+            try
+            {
+                // Get the stock item by id
+                //lstParameters = await _adminServices.GetParametersAsync(paramterRequest);
+
+                long CamId = await _adminServices.savecamera(camreq);
+
+
+                response.Model = CamId;
+                if (CamId > 0)
+                    response.Message = string.Format("Camera details saved .");
+                else
+                    response.Message = string.Format("Camera saving failed or ErrorCode already exists");
+
+                // _logger?.LogInformation("The Config saved successfully.");
+
+
+
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(saveConfig), ex);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, response);

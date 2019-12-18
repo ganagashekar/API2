@@ -17,14 +17,19 @@ namespace EMSVWPIDataContext.Entities
         [Key]
         public System.Int64 bus_id{get;set;}
 		public System.String mac_id{get;set;}
-		public System.String com_port{get;set;}
+        [ForeignKey("mac_id")]
+        public virtual dl_controller dl_controller { get; set; }
+
+        public System.String com_port{get;set;}
 		public System.Int64 baud_rate{get;set;}
 		public System.Int32 time_out{get;set;}
 		public System.Int32 data_byte_stat_indx{get;set;}
 		public System.String protocal{get;set;}
 		public System.DateTime updt_ts{get;set;}
 
-		public object GetRaw(string field)
+   
+       
+        public object GetRaw(string field)
 		{
 			if (Schema.ContainsKey(field)) return RawValues[Schema[field]];
 			return new object();

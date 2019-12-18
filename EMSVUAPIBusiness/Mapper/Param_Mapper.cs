@@ -48,8 +48,8 @@ namespace EMSVUAPIBusiness.Mapper
           .ForMember(dest => dest.Site, src => src.MapFrom(x => x.dl_vendor_sites.dl_Site))
           .ForMember(dest => dest.IsEnabled, src => src.MapFrom(s => s.is_enabled))
           .ForMember(dest => dest.vendorSiteId, src => src.MapFrom(s => s.vendor_site_id))
-           .ForMember(dest => dest.RoleId, src => src.MapFrom(s => s.userRoles.IsNotNull() ? s.userRoles.role_id : 0))
-           .ForMember(dest => dest.RoleName, src => src.MapFrom(s => s.userRoles.roles.IsNotNull() ? s.userRoles.roles.name : ""))
+           .ForMember(dest => dest.roleId, src => src.MapFrom(s => s.userRoles.IsNotNull() ? s.userRoles.role_id : 0))
+           .ForMember(dest => dest.roleName, src => src.MapFrom(s => s.userRoles.roles.IsNotNull() ? s.userRoles.roles.name : ""))
            .ForMember(dest => dest.UserPass, src => src.Ignore()).ReverseMap();
 
 
@@ -73,6 +73,7 @@ namespace EMSVUAPIBusiness.Mapper
 
             CreateMap<dl_controller_bus, ControllerBus_Model>()
                     .ForMember(dest => dest.busId, src => src.MapFrom(s => s.bus_id))
+                    .ForMember(dest => dest.SiteId, src => src.MapFrom(s => s.dl_controller.site_id))
                     .ForMember(dest => dest.macId, src => src.MapFrom(s => s.mac_id))
                     .ForMember(dest => dest.comPort, src => src.MapFrom(s => s.com_port))
                     .ForMember(dest => dest.baudrate, src => src.MapFrom(s => s.baud_rate))
@@ -165,7 +166,8 @@ namespace EMSVUAPIBusiness.Mapper
 
 
             CreateMap<dl_calibrations, Calib_Model>().ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
-
+            .ForMember(dest => dest.stack_name, src => src.MapFrom(s => s.dl_confgs.stack_name))
+              
           .ForMember(dest => dest.calibsetupid, src => src.MapFrom(s => s.calib_status_id))
            .ForMember(dest => dest.clib_name, src => src.MapFrom(s => s.calib_name))
 
@@ -183,10 +185,10 @@ namespace EMSVUAPIBusiness.Mapper
           .ForMember(dest => dest.calib_zero_delay, src => src.MapFrom(s => s.calib_zero_delay))
 
           .ForMember(dest => dest.calibtype, src => src.MapFrom(s => s.calib_type))
-           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_confg.dl_site.site_id))
-           .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.dl_confg.dl_site.site_name))
+           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_confgs.dl_site.site_id))
+           .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.dl_confgs.dl_site.site_name))
 
-          .ForMember(dest => dest.paramName, src => src.MapFrom(s => s.param_name))
+          .ForMember(dest => dest.paramname, src => src.MapFrom(s => s.param_name))
           .ForMember(dest => dest.create_ts, src => src.MapFrom(s => s.creat_ts))
             .ForMember(dest => dest.updtts, src => src.MapFrom(s => s.updt_ts))
              .ForMember(dest => dest.calib_span_gas_name, src => src.MapFrom(s => s.calib_span_gas_name))
@@ -203,6 +205,25 @@ namespace EMSVUAPIBusiness.Mapper
                   .ForMember(dest => dest.createts, src => src.MapFrom(s => s.creat_ts)).ReverseMap();
 
 
+                     CreateMap<dl_camera, Cameras_Model>()
+                    .ForMember(dest => dest.camId, src => src.MapFrom(s => s.cam_id))
+                    .ForMember(dest => dest.confgId, src => src.MapFrom(s => s.confg_id))
+                    .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.site_id))
+                    .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.dl_site.site_name))
+                    .ForMember(dest => dest.stackName, src => src.MapFrom(s => s.stack_name))
+                    .ForMember(dest => dest.paramName, src => src.MapFrom(s => s.param_name))
+                    .ForMember(dest => dest.rtpsUrl, src => src.MapFrom(s => s.rtps_url))
+                    .ForMember(dest => dest.ipAddress, src => src.MapFrom(s => s.ip_address))
+                    .ForMember(dest => dest.camMake, src => src.MapFrom(s => s.cam_make))
+                    .ForMember(dest => dest.cam_model_no, src => src.MapFrom(s => s.cam_model_no))
+                    .ForMember(dest => dest.ptz, src => src.MapFrom(s => s.ptz))
+                   .ForMember(dest => dest.connectivity_typ, src => src.MapFrom(s => s.connectivity_typ))
+                    .ForMember(dest => dest.band_width, src => src.MapFrom(s => s.band_width))
+                    .ForMember(dest => dest.night_vision, src => src.MapFrom(s => s.night_vision))
+                    .ForMember(dest => dest.zoom, src => src.MapFrom(s => s.zoom))
+                    .ForMember(dest => dest.creat_usr, src => src.MapFrom(s => s.creat_usr))
+                    .ForMember(dest => dest.creat_ts, src => src.MapFrom(s => s.creat_ts))
+                    .ForMember(dest => dest.updt_ts, src => src.MapFrom(s => s.updt_ts)).ReverseMap();
 
 
         }

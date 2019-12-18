@@ -17,8 +17,8 @@ namespace EMSVAPIModel
         public DateTime Creatts { get; set; }
         public DateTime Updtts { get; set; }
         public site_Model Site { set; get; }
-        public int RoleId { set; get; }
-        public string RoleName { set; get; }
+        public long roleId { set; get; }
+        public string roleName { set; get; }
 
 
 

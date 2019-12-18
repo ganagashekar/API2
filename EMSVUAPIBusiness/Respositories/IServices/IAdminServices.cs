@@ -40,8 +40,12 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<Calibration_Model>> GetcalibrationsetupAsync(CalibrationReqModel calibRequest);
         Task<long> Savecalibrationsetup(Calibration_Model calibreq);
         Task<List<Calib_Model>> GetCalibReportAsync(CalibReqModel calibRequest);
-        Task<long> Savecalibreport(Calib_Model calibreq);
+        Task<long> Savecalibreport(CalibReqModel calibreq);
         Task<bool> Deletecalibreport(long calibsetupid);
-        
+        Task<long> savecamera(Cameras_Model camreq);
+        Task<bool> Deletecamera(long cam_id);
+
+        Task<List<Cameras_Model>> GetcameraAsync(CameraRequestModel cameraRequest);
+
     }
 }

@@ -74,6 +74,9 @@ namespace EMSVU.API.Controllers
         {
             var response = new PagedResponse<DashboardQuickDataModel>();
 
+            //requestModel.fromDate = DateTime.Now.AddDays(-4);
+            //requestModel.toDate = DateTime.Now.AddDays(-2);
+
             List<DashboardQuickDataModel> lstParameters = new List<DashboardQuickDataModel>();
             try
             {
@@ -133,5 +136,37 @@ namespace EMSVU.API.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
+
+        [HttpPost]
+        [Route("GetCalibrationreport")]
+
+        public async Task<HttpResponseMessage> GetCalibrationreport(DashboardRequestModel requestModel)
+        {
+            var response = new PagedResponse<DashboardQuickDataModel>();
+
+            requestModel.fromDate = DateTime.Now.AddDays(-4);
+            requestModel.toDate = DateTime.Now.AddDays(-2);
+
+            List<DashboardQuickDataModel> lstParameters = new List<DashboardQuickDataModel>();
+            try
+            {
+
+                response.DataTable = await _dashboardServices.GetCalibrationreport(requestModel);
+                response.PageSize = lstParameters.Count;
+                response.PageNumber = 1;
+                response.Model = lstParameters.ToList();
+                response.Message = string.Format("Page {0} of {1}, Total of Data: {2}.", 1, 1, response.PageSize);
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="Entities\Cdl_audit.cs" />
     <Compile Include="Entities\Cdl_calibration.cs" />
     <Compile Include="Entities\Cdl_calib_cmd_setup.cs" />
+    <Compile Include="Entities\Cdl_cameras.cs" />
     <Compile Include="Entities\Cdl_confg.cs" />
     <Compile Include="Entities\Cdl_controller.cs" />
     <Compile Include="Entities\Cdl_controller_bus.cs" />

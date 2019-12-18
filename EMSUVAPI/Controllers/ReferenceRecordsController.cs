@@ -203,7 +203,7 @@ namespace EMSVU.API.Controllers
 
 
         [Route("Getconfigs")]
-        public async Task<HttpResponseMessage> Getconfigs(long BusId, bool IncludeAll)
+        public async Task<HttpResponseMessage> Getconfigs(long busID, bool IncludeAll)
         {
             // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
 
@@ -212,7 +212,7 @@ namespace EMSVU.API.Controllers
             try
             {
                 // Get the stock item by id
-                var lstconfigs = await _referenceRecordsServcie.Getconfigs(BusId, IncludeAll);
+                var lstconfigs = await _referenceRecordsServcie.Getconfigs(busID, IncludeAll);
 
                 if (lstconfigs.Any())
                 {
@@ -236,7 +236,42 @@ namespace EMSVU.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
 
         }
-       // srikanth code
+
+        [Route("Getconfigbybusid")]
+        public async Task<HttpResponseMessage> Getconfigbybusid(long BusId, bool IncludeAll)
+        {
+            // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
+
+            var response = new PagedResponse<ReferenceRecordsModel>();
+
+            try
+            {
+                // Get the stock item by id
+                var lstconfigs = await _referenceRecordsServcie.Getconfigbybusid(BusId, IncludeAll);
+
+                if (lstconfigs.Any())
+                {
+                    response.PageSize = lstconfigs.Count;
+                    response.PageNumber = 1;
+                    response.Model = lstconfigs.ToList();
+
+                    response.Message = string.Format("Page {0} of {1}, Total of configs: {2}.", 1, 1, response.PageSize);
+
+                    // _logger?.LogInformation("The stock items have been retrieved successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetReferenceRecords), ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+
+        }
+        // srikanth code
         [Route("Getparamcalib")]
         public async Task<HttpResponseMessage> Getparamcalib(long paramId, bool IncludeAll)
         {
@@ -305,6 +340,43 @@ namespace EMSVU.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
 
         }
+
+        [Route("GetUsrRole")]
+
+        public async Task<HttpResponseMessage> GetUsrRole(long RoleId, bool IncludeAll)
+        {
+            // // _logger?.LogDebug("'{0}' has been invoked", nameof(GetReferenceRecords));
+
+            var response = new PagedResponse<User_Model>();
+
+            try
+            {
+
+                var lstParameters = await _referenceRecordsServcie.GetUsrRole(RoleId, IncludeAll);
+                if (lstParameters.Any())
+                {
+                    response.PageSize = lstParameters.Count;
+                    response.PageNumber = 1;
+                    response.Model = lstParameters.ToList();
+
+                    response.Message = string.Format("Page {0} of {1}, Total of Paramters: {2}.", 1, 1, response.PageSize);
+
+                    // // _logger?.LogInformation("The stock items have been retrieved successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+
+                // // _logger?.LogCritical("There was an error on '{0}' invocation: {1}", nameof(GetReferenceRecords), ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+
+        }
+
+
 
 
 

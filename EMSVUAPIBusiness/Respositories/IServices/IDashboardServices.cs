@@ -14,5 +14,6 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<DashboardQuickDataModel>> GetDashboardQucikDataAsync(DashboardRequestModel Request);
 
         Task<DataTable> GetDashboardChartDayData(DashboardRequestModel paramterRequest);
+       Task<DataTable> GetCalibrationreport(DashboardRequestModel requestModel);
     }
 }

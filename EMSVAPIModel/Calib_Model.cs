@@ -9,8 +9,10 @@ namespace EMSVAPIModel
         public long calibsetupid { get; set; }
         public string clib_name { get; set; }
 
+        public string stack_name { get; set; }
+
         public long confgId { get; set; }
-        public string paramName { get; set; }
+        public string paramname { get; set; }
         public string calibtype { get; set; }
 
         public DateTime create_ts { get; set; }
@@ -21,9 +23,9 @@ namespace EMSVAPIModel
         public string calib_zero_gas_name { get; set; }
         public string calib_zero_gas_unit { get; set; }
         public string calib_zero_gas_type { get; set; }
-        public Int32 ca_set_new_zero_value { get; set; }
-        public Int32 calib_zero_duriation { get; set; }
-        public Int32 calib_zero_delay { get; set; }
+        public int? ca_set_new_zero_value { get; set; }
+        public int? calib_zero_duriation { get; set; }
+        public int? calib_zero_delay { get; set; }
 
         public string calib_span_gas_name { get; set; }
 
@@ -36,5 +38,10 @@ namespace EMSVAPIModel
 
         public long siteId { set; get; }
         public string siteName { set; get; }
+
+
+
+
+       
     }
 }
