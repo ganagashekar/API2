@@ -136,7 +136,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var userinfoModel = await _dbContext.dl_usrs.Include(x => x.userRoles).Include(x => x.userRoles.roles).FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
+                var userinfoModel = await _dbContext.dl_usrs.FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
                 if (userinfoModel.IsNull())
                 {
                     userinfoModel = new dl_usr();
@@ -815,7 +815,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
             {
                 var predicate = PredicateBuilder.New<dl_calibrations>();
                 predicate = null;
-                var lstcalib = _dbContext.dl_calibrations.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
+                var lstcalib = _dbContext.dl_calibrationss.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
 
                 return await Task.FromResult(lstcalib.ToDestinationList<dl_calibrations, Calib_Model>());
             }
@@ -830,10 +830,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var calibModel = await _dbContext.dl_calibrations.FirstOrDefaultAsync(x => x.calib_status_id == calibsetupid);
+                var calibModel = await _dbContext.dl_calibrationss.FirstOrDefaultAsync(x => x.calib_status_id == calibsetupid);
                 if (calibModel.IsNotNull())
                 {
-                    _dbContext.dl_calibrations.Remove(calibModel);
+                    _dbContext.dl_calibrationss.Remove(calibModel);
                 }
 
                 _dbContext.SaveChanges();
@@ -845,22 +845,22 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 return false;
             }
         }
-        public async Task<long> Savecalibreport(CalibReqModel calibreq)
+        public async Task<long> Savecalibreport(Calib_Model calibreq)
         {
             try
             {
 
-                var CalibModel = await _dbContext.dl_calibrations.Include(x => x.dl_confgs).Include(x => x.dl_confgs.dl_site).FirstOrDefaultAsync(x => x.calib_status_id == calibreq.calibsetupid);
+                var CalibModel = await _dbContext.dl_calibrationss.Include(x => x.dl_confgs).Include(x => x.dl_confgs.dl_site).Include(x => x.dl_confgs.stack_name).FirstOrDefaultAsync(x => x.calib_status_id == calibreq.calibsetupid);
                 if (CalibModel.IsNull())
                 {
                     CalibModel = new dl_calibrations();
-                    _dbContext.dl_calibrations.Add(CalibModel);
+                    _dbContext.dl_calibrationss.Add(CalibModel);
                     CalibModel.creat_ts = DateTime.Now;
                 }
-                //CalibModel.confg_id = calibreq.confgId;
-               // CalibModel.dl_confgs.dl_site.site_name = calibreq.siteName;
+                CalibModel.confg_id = calibreq.confgId;
+               // CalibModel.dl_site.site_name = calibreq.siteName;
                CalibModel.param_name = calibreq.paramname;
-               //CalibModel.dl_confgs.stack_name = calibreq.stack_name;
+              // CalibModel.dl_confg.stack_name = calibreq.stack_name;
                 CalibModel.calib_name = calibreq.clib_name;
                 CalibModel.calib_type = calibreq.calibtype;
                 //ConfigModel.vendor = confReq.vendorID;

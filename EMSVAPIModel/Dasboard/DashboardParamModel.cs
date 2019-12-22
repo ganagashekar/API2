@@ -41,6 +41,17 @@ namespace EMSVAPIModel.Dasboard
 
         [DataMember(Name = "Value")]
         public float paramValue { set; get; }
+        //ravi code for excedence popup
+
+        [DataMember(Name = "Parameter Units")]
+        public string paramunit { get; set; }
+
+        //[DataMember(Name = "Limit")]
+        //public string paramRange { get; set; }
+
+        [DataMember(Name = "Threshold")]
+        public int? threshholdval { get; set; }
+        //end code
 
         [DataMember(Name = "Created Date")]
         public DateTime CreatedDate { set; get; }

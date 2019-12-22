@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EMSVU.API.Controllers
 {
-    [RoutePrefix("api/v1/ReferenceRecords")]
+    [System.Web.Http.RoutePrefix("api/v1/ReferenceRecords")]
 
     public class ReferenceRecordsController : ApiController
     {

@@ -1201,7 +1201,7 @@ namespace EMSUVAPI.Controllers
         }
         [HttpPost]
         [Route("Savecalibreport")]
-        public async Task<HttpResponseMessage> Savecalibreport(CalibReqModel calibreq)
+        public async Task<HttpResponseMessage> Savecalibreport(Calib_Model calibreq)
         {
 
 

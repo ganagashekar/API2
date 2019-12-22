@@ -13,15 +13,16 @@ namespace EMSVWPIDataContext.Entities
     {
         [Key]
         public long calib_status_id { get; set; }
-
+       
         public long confg_id { get; set; }
         [ForeignKey("confg_id")]
         public virtual dl_confg dl_confgs { get; set; }
 
+
         public string calib_name { get; set; }
 
         public string param_name { get; set; }
-      
+       
         public string calib_type { get; set; }
 
         public int? calib_zero_duriation { get; set; }

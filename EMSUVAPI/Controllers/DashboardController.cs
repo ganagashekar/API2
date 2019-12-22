@@ -74,8 +74,8 @@ namespace EMSVU.API.Controllers
         {
             var response = new PagedResponse<DashboardQuickDataModel>();
 
-            //requestModel.fromDate = DateTime.Now.AddDays(-4);
-            //requestModel.toDate = DateTime.Now.AddDays(-2);
+            requestModel.fromDate = DateTime.Now.AddDays(-4);
+            requestModel.toDate = DateTime.Now.AddDays(-2);
 
             List<DashboardQuickDataModel> lstParameters = new List<DashboardQuickDataModel>();
             try
@@ -144,7 +144,7 @@ namespace EMSVU.API.Controllers
         {
             var response = new PagedResponse<DashboardQuickDataModel>();
 
-            requestModel.fromDate = DateTime.Now.AddDays(-4);
+            requestModel.fromDate = DateTime.Now.AddDays(-6);
             requestModel.toDate = DateTime.Now.AddDays(-2);
 
             List<DashboardQuickDataModel> lstParameters = new List<DashboardQuickDataModel>();

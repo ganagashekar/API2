@@ -185,7 +185,7 @@ namespace EMSVUAPIBusiness.Mapper
           .ForMember(dest => dest.calib_zero_delay, src => src.MapFrom(s => s.calib_zero_delay))
 
           .ForMember(dest => dest.calibtype, src => src.MapFrom(s => s.calib_type))
-           .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_confgs.dl_site.site_id))
+         .ForMember(dest => dest.siteId, src => src.MapFrom(s => s.dl_confgs.dl_site.site_id))
            .ForMember(dest => dest.siteName, src => src.MapFrom(s => s.dl_confgs.dl_site.site_name))
 
           .ForMember(dest => dest.paramname, src => src.MapFrom(s => s.param_name))

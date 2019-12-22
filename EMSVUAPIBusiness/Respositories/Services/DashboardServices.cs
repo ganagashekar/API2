@@ -184,6 +184,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
                                        stackName = x.dl_confg.stack_name,
                                        paramname = x.dl_param.param_name,
                                        paramValue = x.param_value,
+                                       //ravi code
+                                       paramunit = x.dl_param.param_unit,
+                                       threshholdval = x.dl_param.threshhold_val,
+                                       //end code
                                        CreatedDate = x.creat_ts
                                    }).ToList();
 
@@ -195,7 +199,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
                         stackName = y.dl_confg.stack_name,
                         paramname = y.dl_param.param_name,
                         paramValue = y.param_value,
-                        CreatedDate = y.creat_ts
+                        CreatedDate = y.creat_ts,
+                           //ravi code for excedence popup
+                        paramunit = y.dl_param.param_unit,
+                        threshholdval = y.dl_param.threshhold_val,
                     }).ToList();
                  dlhistoricalcount.AddRange(dldatacount);
                 var AlarmCount = (from x in _dbContext.dl_audits
