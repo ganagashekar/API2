@@ -136,7 +136,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var userinfoModel = await _dbContext.dl_usrs.FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
+                var userinfoModel = await _dbContext.dl_usrs.Include(x=>x.userRoles).Include(x=>x.userRoles.roles).FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
                 if (userinfoModel.IsNull())
                 {
                     userinfoModel = new dl_usr();
@@ -144,6 +144,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                     userinfoModel.updt_ts = DateTime.Now;
                 }
                 userinfoModel.usr_id = userReq.UserId;
+                userinfoModel.userRoles.role_id = userReq.UserId;
                 userinfoModel.usr_name = userReq.UserName;
                 userinfoModel.pass = userReq.UserPass.Encrypt();
                 userinfoModel.is_enabled = userReq.IsEnabled;
