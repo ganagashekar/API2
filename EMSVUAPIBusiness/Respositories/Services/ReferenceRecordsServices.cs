@@ -77,17 +77,6 @@ namespace EMSVUAPIBusiness.Respositories.Services
             return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
         }
 
-        public async Task<List<ReferenceRecordsModel>> Getparamcalib(long paramId, bool IncludeAll)
-        {
-            var dl_confgs = _dbContext.dl_params.Where(types => paramId == 0 ? true : types.param_id == paramId).ToList();
-            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.param_id, Name=x.param_name }).ToList();
-            if (referencerecords.Any() && paramId == 0)
-            {
-                AddAllTOReferenceRecords(ref referencerecords);
-                return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
-            }
-            return await Task.FromResult<List<ReferenceRecordsModel>>(null);
-        }
         public async Task<List<ReferenceRecordsModel>> GetParameterforStack(ParamterRequestModel paramterRequest)
         {
 
@@ -115,24 +104,10 @@ namespace EMSVUAPIBusiness.Respositories.Services
         }
 
         //srikanth code
-        public async Task<List<ReferenceRecordsModel>> Getconfigs(long busID, bool IncludeAll)
+        public async Task<List<ReferenceRecordsModel>> Getconfigs(long BusId, bool IncludeAll)
         {
-
-            var dl_confgs = _dbContext.dl_confgs.Where(types => busID == 0 ? true : types.bus_id == busID).ToList();
-            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.bus_id,Name=x.stack_name }).ToList();
-            if (referencerecords.Any())
-            {
-                AddAllTOReferenceRecords(ref referencerecords);
-                return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
-            }
-            return await Task.FromResult<List<ReferenceRecordsModel>>(null);
-        }
-
-        //srikanth code
-        public async Task<List<ReferenceRecordsModel>> Getconfigbybusid(long BusId, bool IncludeAll)
-        {
-            var dl_confgs = _dbContext.dl_controller_buss.Where(types => BusId == 0 ? true : types.bus_id == BusId).ToList();
-            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.bus_id }).ToList();
+            var dl_confgs = _dbContext.dl_confgs.Where(types => BusId == 0 ? true : types.confg_id == BusId).ToList();
+            var referencerecords = dl_confgs.Select(x => new Referencerecords { Id = x.bus_id, Name = x.stack_name }).ToList();
             if (referencerecords.Any())
             {
                 AddAllTOReferenceRecords(ref referencerecords);
@@ -154,20 +129,6 @@ namespace EMSVUAPIBusiness.Respositories.Services
             }
             return await Task.FromResult(referencerecords);
         }
-
-        public async Task<List<User_Model>> GetUsrRole(long RoleId, bool IncludeAll)
-        {
-            var dl_role = _dbContext.dl_roles.Where(types => RoleId == 0 ? true : types.role_id == RoleId).ToList();
-            var referencerecords = dl_role.Select(x => new User_Model { roleId =x.role_id, roleName=x.name }).ToList();
-            if (referencerecords.Any() )
-            {
-                //AddAllTOReferenceRecords(ref referencerecords);
-                //return await Task.FromResult(referencerecords.ToDestinationList<Referencerecords, ReferenceRecordsModel>());
-
-            }
-            return await Task.FromResult(referencerecords);
-        }
-
 
 
 

@@ -2,9 +2,10 @@
 using EMSVAPIModel.InuputModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
+
 namespace EMSVUAPIBusiness.Respositories.IServices
 {
    public interface IDashboardServices
@@ -14,6 +15,6 @@ namespace EMSVUAPIBusiness.Respositories.IServices
         Task<List<DashboardQuickDataModel>> GetDashboardQucikDataAsync(DashboardRequestModel Request);
 
         Task<DataTable> GetDashboardChartDayData(DashboardRequestModel paramterRequest);
-       Task<DataTable> GetCalibrationreport(DashboardRequestModel requestModel);
+        Task<DataTable> GetCalibReportAsync(DashboardRequestModel paramterRequest);
     }
 }

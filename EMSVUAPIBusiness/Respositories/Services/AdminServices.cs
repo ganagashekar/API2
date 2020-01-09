@@ -136,19 +136,19 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var userinfoModel = await _dbContext.dl_usrs.Include(x=>x.userRoles).Include(x=>x.userRoles.roles).FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
+                var userinfoModel = await _dbContext.dl_usrs.Include(x => x.userRoles).Include(x => x.userRoles.roles).FirstOrDefaultAsync(x => x.usr_id == userReq.UserId);
                 if (userinfoModel.IsNull())
                 {
                     userinfoModel = new dl_usr();
                     _dbContext.dl_usrs.Add(userinfoModel);
-                    userinfoModel.updt_ts = DateTime.Now;
+                    // userinfoModel.updt_ts = DateTime.Now;
                 }
                 userinfoModel.usr_id = userReq.UserId;
-                userinfoModel.userRoles.role_id = userReq.UserId;
+                //userinfoModel.userRoles.role_id = userReq.UserId;
                 userinfoModel.usr_name = userReq.UserName;
                 userinfoModel.pass = userReq.UserPass.Encrypt();
                 userinfoModel.is_enabled = userReq.IsEnabled;
-                // userinfoModel.vendor_site_id = userReq.VendorSiteId;
+                //userinfoModel.vendor_site_id = userReq.vendorSiteId;
                 userinfoModel.updt_ts = DateTime.Now;
                 userinfoModel.creat_ts = DateTime.Now;
                 _dbContext.SaveChanges();
@@ -520,8 +520,8 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 {
                     predicate = null;
                 }
-               // predicate = null;
-               
+                // predicate = null;
+
                 var lstconfig = _dbContext.dl_confgs.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
 
                 return await Task.FromResult(lstconfig.ToDestinationList<dl_confg, Confg_Model>());
@@ -702,7 +702,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 {
                     predicate = null;
                 }
-               // predicate = null;
+                // predicate = null;
 
                 var lstcontrollerbus = _dbContext.dl_controller_buss.NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
 
@@ -859,9 +859,9 @@ namespace EMSVUAPIBusiness.Respositories.Services
                     CalibModel.creat_ts = DateTime.Now;
                 }
                 CalibModel.confg_id = calibreq.confgId;
-               // CalibModel.dl_site.site_name = calibreq.siteName;
-               CalibModel.param_name = calibreq.paramname;
-              // CalibModel.dl_confg.stack_name = calibreq.stack_name;
+                // CalibModel.dl_site.site_name = calibreq.siteName;
+                CalibModel.param_name = calibreq.paramname;
+                // CalibModel.dl_confg.stack_name = calibreq.stack_name;
                 CalibModel.calib_name = calibreq.clib_name;
                 CalibModel.calib_type = calibreq.calibtype;
                 //ConfigModel.vendor = confReq.vendorID;
@@ -897,7 +897,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
         {
             try
             {
-                var CamModel = await _dbContext.dl_Camerass.Include(x=>x.dl_site).Include(x=>x.dl_site.site_name).FirstOrDefaultAsync(x => x.cam_id == camreq.camId);
+                var CamModel = await _dbContext.dl_Camerass.Include(x => x.dl_site).Include(x => x.dl_site.site_name).FirstOrDefaultAsync(x => x.cam_id == camreq.camId);
                 if (CamModel.IsNull())
                 {
                     CamModel = new dl_camera();
@@ -967,7 +967,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                 throw ex;
             }
         }
-      
+
 
     }
 }

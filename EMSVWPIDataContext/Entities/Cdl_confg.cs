@@ -38,7 +38,10 @@ namespace EMSVWPIDataContext.Entities
 		public System.String disp_output_typ{get;set;}
 		public System.DateTime creat_ts{get;set;}
 		public System.DateTime updt_ts{get;set;}
+
         public string color_code { set; get; }
+
+
         public object GetRaw(string field)
 		{
 			if (Schema.ContainsKey(field)) return RawValues[Schema[field]];

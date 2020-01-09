@@ -35,10 +35,6 @@ namespace EMSVUAPIBusiness.Respositories.Services
             inModel.StackId = paramterRequest.StackId;
             inModel.ParamId = paramterRequest.ParamId;
 
-            inModel.FromDate = paramterRequest.fromDate;
-            inModel.ToDate = paramterRequest.toDate;
-
-
 
             return await ReportServices.GetAverageReport(inModel);
         }
@@ -120,41 +116,18 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
         }
 
-        //public async Task<DashboardQuickCounts> GetDashboardQuickCountsAsync(DashboardRequestModel paramterRequest)
-        //{
-        //    DashboardQuickCounts dashboardQuickCounts = new DashboardQuickCounts();
-        //    try
-        //    {
+        public async Task<DataTable> GetCalibReportAsync(DashboardRequestModel paramterRequest)
+        {
+            var ReportServices = new ReportServices();
+            ReportRequestModel inModel = new ReportRequestModel();
+            inModel.SiteId = paramterRequest.SiteId;
+            inModel.StackId = paramterRequest.StackId;
+            inModel.ParamId = paramterRequest.ParamId;
 
 
-        //        var predicate = PredicateBuilder.New<dl_param>();
-        //        if (!paramterRequest.SiteId.ToLongIsZero())
-        //        {
-        //            predicate = predicate.And(p => p.dl_confgs.site_id == (paramterRequest.SiteId));
-        //        }
-        //        if (!paramterRequest.StackId.ToLongIsZero())
-        //        {
-        //            predicate = predicate.And(p => p.confg_id == paramterRequest.StackId);
-        //        }
-        //        if (!(predicate.Parameters.Count > 0))
-        //        {
-        //            predicate = null;
-        //        }
-        //        var lstParams = _dbContext.dl_params.AsNoTracking().Include(x => x.dl_confgs).NullSafeWhere(predicate); //.Where(x => paramterRequest.StackId != 0 && x.confg_id == paramterRequest.StackId && paramterRequest.SiteId != 0 && x.dl_confg.site_id == paramterRequest.SiteId.ToString()).ToList();
+            return await ReportServices.GetAverageReport(inModel);
+        }
 
-        //        dashboardQuickCounts.StackCount = lstParams.ToList().GroupBy(x => x.dl_confgs.confg_id).Count();
-        //        dashboardQuickCounts.ParamCount = lstParams.Count();
-        //        dashboardQuickCounts.ExceedenceCount = 10;
-        //        dashboardQuickCounts.AlertCount = 100;
-
-        //        return await Task.FromResult(dashboardQuickCounts);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //}
         public async Task<DashboardQuickCounts> GetDashboardQuickCountsAsync(DashboardRequestModel paramterRequest)
         {
             DashboardQuickCounts dashboardQuickCounts = new DashboardQuickCounts();
@@ -176,7 +149,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
                     predicate = null;
                 }
                 var lstParams = _dbContext.dl_params.AsNoTracking().Include(x => x.dl_confgs).NullSafeWhere(predicate);
-                var AddDays = DateTime.Now.Date;
+                var AddDays = DateTime.Now.AddDays(0).Date;
                 var dldatacount = (from x in _dbContext.dl_data.Include(x => x.dl_param)
                                    where x.creat_ts >= AddDays && (x.dl_confg.site_id== (paramterRequest.SiteId)|| (paramterRequest.SiteId)==0) && x.dl_param != null && x.param_value > x.dl_param.threshhold_val
                                    select new DashboardExceedence
@@ -193,14 +166,14 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
                 var dlhistoricalcount = (
                     from y in _dbContext.dl_data_Historical.Include(x => x.dl_param)
-                    where   (y.dl_confg.site_id == (paramterRequest.SiteId) || (paramterRequest.SiteId) == 0) && y.creat_ts >= AddDays && y.dl_param != null && y.param_value > y.dl_param.threshhold_val
+                    where y.creat_ts >= AddDays && y.dl_param != null && y.param_value > y.dl_param.threshhold_val
                     select new DashboardExceedence
                     {
                         stackName = y.dl_confg.stack_name,
                         paramname = y.dl_param.param_name,
                         paramValue = y.param_value,
                         CreatedDate = y.creat_ts,
-                           //ravi code for excedence popup
+                         //ravi code for excedence popup
                         paramunit = y.dl_param.param_unit,
                         threshholdval = y.dl_param.threshhold_val,
                     }).ToList();
@@ -245,22 +218,6 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
                 throw ex;
             }
-        }
-
-        public async Task<DataTable> GetCalibrationreport(DashboardRequestModel paramterRequest)
-        {
-            var ReportServices = new ReportServices();
-            ReportRequestModel inModel = new ReportRequestModel();
-            inModel.SiteId = paramterRequest.SiteId;
-            inModel.StackId = paramterRequest.StackId;
-            inModel.ParamId = paramterRequest.ParamId;
-
-            inModel.FromDate = paramterRequest.fromDate;
-            inModel.ToDate = paramterRequest.toDate;
-
-
-
-            return await ReportServices.GetAverageReport(inModel);
         }
     }
 }

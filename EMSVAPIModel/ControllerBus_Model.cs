@@ -6,9 +6,8 @@ namespace EMSVAPIModel
 {
     public class ControllerBus_Model
     {
-        public long busId { get; set; }
+        public int busId { get; set; }
         public long SiteId { get; set; }
-
         public string macId { get; set; }
         public string comPort { get; set; }
         public long baudrate { get; set; }

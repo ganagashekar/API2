@@ -16,10 +16,15 @@ namespace EMSVWPIDataContext.Entities
 
         [Key]
         public System.Int64 usr_id{get;set;}
-		public System.Int64 role_id{get;set;}
+
+
+        public System.Int64 role_id { get; set; }
+
         [ForeignKey("role_id")]
         public virtual dl_role roles { set; get; }
-        public object GetRaw(string field)
+
+
+		public object GetRaw(string field)
 		{
 			if (Schema.ContainsKey(field)) return RawValues[Schema[field]];
 			return new object();

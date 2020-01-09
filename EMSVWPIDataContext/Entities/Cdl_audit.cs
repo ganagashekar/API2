@@ -22,12 +22,12 @@ namespace EMSVWPIDataContext.Entities
 		public System.String param_name{get;set;}
 		public System.Single param_val{get;set;}
 		public System.String audit_reason{get;set;}
-		public System.DateTime? param_prod_time{get;set;}
+		public System.DateTime param_prod_time{get;set;}
 		public System.DateTime creat_ts{get;set;}
 		public System.String email_ind{get;set;}
 		public System.String sms_ind{get;set;}
 		public System.String ack_msg{get;set;}
-		public System.DateTime? ack_ts{get;set;}
+		public System.DateTime ack_ts{get;set;}
 
 		public object GetRaw(string field)
 		{

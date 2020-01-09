@@ -37,8 +37,6 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
         public Task<byte[]> ExportDataSet(DataTable ds, ReportRequestModel report)
         {
-
-            //  DataTable ds= AddStackNameUnits(dt, report);
             int ColumnLength = ds.Columns.Count;
             string excelLetter = (ds.Columns.Count - 1).GetColumnName();
             byte[] excelbytearray = null;
@@ -86,7 +84,7 @@ namespace EMSVUAPIBusiness.Respositories.Services
 
 
 
-
+                        ws.Cells[7,1].Style.Numberformat.Format = "dd/MM/yyyy hh:mm:ss AM/PM";
                         ws.Cells[7, 1].LoadFromDataTable(ds, true).AutoFitColumns();
 
 

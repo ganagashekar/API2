@@ -36,12 +36,12 @@ namespace EMSVAPIModel
         public int? calib_span_duriation { get; set; }
         public int? ca_set_new_span_value { get; set; }
 
-        public long siteId { get; set;  }
-       public string siteName { set; get; }
+        public long siteId { get; set; }
+        public string siteName { set; get; }
 
 
 
 
-       
+
     }
 }

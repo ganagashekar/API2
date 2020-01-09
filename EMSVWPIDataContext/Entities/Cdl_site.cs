@@ -15,10 +15,8 @@ namespace EMSVWPIDataContext.Entities
 		public object[] RawValues;             //  /
 
         [Key]
-        public long site_id {get;set;}
-     
-
-        public System.String site_name{get;set;}
+        public long site_id{get;set;}
+		public System.String site_name{get;set;}
 		public System.String site_logo{get;set;}
 		public System.String site_cpcb_cd{get;set;}
 		public System.String site_ind_type{get;set;}

@@ -87,8 +87,6 @@ namespace EMSVU.API.Controllers
         }
 
 
-
-
         [Route("FetchLiveReports")]
         [HttpPost]
         public async Task<HttpResponseMessage> FetchLiveReports(ReportRequestModel reportRequestModel)

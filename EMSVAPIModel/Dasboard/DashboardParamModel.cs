@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EMSVAPIModel.Dasboard
 {
@@ -52,6 +57,8 @@ namespace EMSVAPIModel.Dasboard
         [DataMember(Name = "Threshold")]
         public int? threshholdval { get; set; }
         //end code
+
+
 
         [DataMember(Name = "Created Date")]
         public DateTime CreatedDate { set; get; }

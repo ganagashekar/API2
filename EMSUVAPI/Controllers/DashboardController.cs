@@ -73,8 +73,7 @@ namespace EMSVU.API.Controllers
         public async Task<HttpResponseMessage> GetDashboardQuickDataChartAsync(DashboardRequestModel requestModel)
         {
             var response = new PagedResponse<DashboardQuickDataModel>();
-
-            requestModel.fromDate = DateTime.Now.AddDays(-4);
+            requestModel.fromDate = DateTime.Now.AddDays(-6);
             requestModel.toDate = DateTime.Now.AddDays(-2);
 
             List<DashboardQuickDataModel> lstParameters = new List<DashboardQuickDataModel>();
@@ -136,14 +135,12 @@ namespace EMSVU.API.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
-
         [HttpPost]
-        [Route("GetCalibrationreport")]
+        [Route("GetCalibReportAsync")]
 
-        public async Task<HttpResponseMessage> GetCalibrationreport(DashboardRequestModel requestModel)
+        public async Task<HttpResponseMessage> GetCalibReportAsync(DashboardRequestModel requestModel)
         {
             var response = new PagedResponse<DashboardQuickDataModel>();
-
             requestModel.fromDate = DateTime.Now.AddDays(-6);
             requestModel.toDate = DateTime.Now.AddDays(-2);
 
@@ -151,7 +148,7 @@ namespace EMSVU.API.Controllers
             try
             {
 
-                response.DataTable = await _dashboardServices.GetCalibrationreport(requestModel);
+                response.DataTable = await _dashboardServices.GetDashboardChartDayData(requestModel);
                 response.PageSize = lstParameters.Count;
                 response.PageNumber = 1;
                 response.Model = lstParameters.ToList();
@@ -167,6 +164,5 @@ namespace EMSVU.API.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
-
     }
 }

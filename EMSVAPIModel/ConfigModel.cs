@@ -6,7 +6,7 @@ using System.Text;
 namespace EMSVAPIModel
 {
     [DataContract]
-    public class ConfigModel
+   public class ConfigModel
     {
         [DataMember(Name = "Stack Name")]
         public string stackName { set; get; }
@@ -16,7 +16,7 @@ namespace EMSVAPIModel
 
         [DataMember(Name = "Status")]
 
-        public string status { get; set; }
+        public string  status { get; set; }
     }
 
     public class sitesModel
